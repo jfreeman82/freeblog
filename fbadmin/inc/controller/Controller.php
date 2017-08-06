@@ -21,9 +21,9 @@ class Controller {
     
     if (isLoggedIn()) {
     
-      if (isset($this->routes[0]) && $this->routes[0] != "") {
-        $route1 = $this->routes[0];
-        switch ($route1) {
+      if (filter_input(INPUT_GET,'page')) {
+        $page = filter_input(INPUT_GET, 'page');
+        switch ($page) {
           case "articles":
             $arts = $this->model->articles_all();
             $this->view->articles($arts);
@@ -52,41 +52,10 @@ class Controller {
           echo 'default'; 
           $warning = $check['warning'];
           $this->view->login($warning);
-      }
-      
-      
+      }      
     }
   }
 
-  /*
-   * routes
-   * 
-   * returns url routes array, exploded by '/'
-   */
-  private function getCurrentUri() {
-    $basepath = implode('/', array_slice(explode('/', $_SERVER['SCRIPT_NAME']), 0, -1)) . '/';
-    $uri = substr($_SERVER['REQUEST_URI'], strlen($basepath));
-    if (strstr($uri, '?')) {
-      $uri = substr($uri, 0, strpos($uri, '?'));
-    }
-    $uri = '/' . trim($uri, '/');
-    return $uri;
-  }
-
-  private function routes() {
-    $base_url = $this->getCurrentUri();
-    $this->routes = array();
-    $this->routes = explode('/', $base_url);
-    foreach($this->routes as $route) {
-      if(trim($route) != '') {
-        array_push($this->routes, trim($route));
-      }
-    }
-    array_pop($this->routes);
-    if (in_array('index.php', $this->routes)) {
-      array_pop($this->routes);
-    }
-  }
   
 }
 
