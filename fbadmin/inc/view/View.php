@@ -12,22 +12,25 @@ class View {
   private $title;
   
 
-  public function __construct() {}
+  public function __construct() {
+    $this->content = "";
+  }
   
   /*
    * Lay-Outs
    */
   public function login($warning = "") {
-    if ($warning != "") {
-      $this->content .= '
-        <div class="warning">'.$warning.'</div>';
-    }
-    $this->content = '
+    $this->content .= '
       <br><br><br><br>
     <div class="container">
       <div class="row">
-        <div class="col-lg-4 col-lg-offset-4">
+        <div class="col-lg-4 col-lg-offset-4">';
           
+    if ($warning != "") {
+      $this->content .= '
+        <div class="alert alert-danger text-center">'.$warning.'</div>';
+    }
+    $this->content .= ' 
       <form class="form-signin" action="'.ADMIN_URL.'" method="POST">
         <h2 class="form-signin-heading">Please sign in</h2>
         <label for="lf_email" class="sr-only">Email address</label>
@@ -43,18 +46,59 @@ class View {
     </div> <!-- /container -->';
     $this->page();
   }
-  public function home() {
-    $this->content = 'home';
-    $this->page();
-  }
   
-  
-  
-  public function warning($msg) {
+  public function dashboard() {
+    $this->setCss(ADMIN_URL."inc/stylesheets/dashboard.css");
+    $tmpcontent = $this->content;
     $this->content = '
-      <div class="warning">'.$msg.'</div>';
+      
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">'. fbvar('ADMIN_TITLE').'</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Dashboard</a></li>
+            <li><a href="#">Settings</a></li>
+            <li><a href="#">Profile</a></li>
+            <li><a href="#">Help</a></li>
+          </ul>
+          <form class="navbar-form navbar-right">
+            <input type="text" class="form-control" placeholder="Search...">
+          </form>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
+            <li><a href="#">Reports</a></li>
+            <li><a href="#">Analytics</a></li>
+            <li><a href="#">Export</a></li>
+          </ul>
+        </div>
+        
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h1 class="page-header">Dashboard</h1>
+
+        '.$tmpcontent.' 
+          
+        </div>
+      </div>
+    </div>';
     $this->page();
   }
+  
   
   private function page() {
     echo  '<!DOCTYPE html>
@@ -78,6 +122,17 @@ class View {
   </body>
 </html>';
   }
+  /* 
+   * Pages
+   *    
+   */
+  public function front() {
+    $content = ' 
+      <h1>Home</h1>
+      <p>The front page</p>
+      ';
+    $this->dashboard();
+  }
   
   /* PAGE BLOCKS 
    * 
@@ -95,23 +150,13 @@ class View {
 ';
   }
   
-  // FOOTER
-  private function footer() {
-    return ' 
-    <footer class="blog-footer">
-      <p>Blog template built for <a href="http://getbootstrap.com">Bootstrap</a> by <a href="https://twitter.com/mdo">@mdo</a>.</p>
-      <p>
-        <a href="#">Back to top</a>
-      </p>
-    </footer>';
-  }
   // NAV
   private function nav() {
     return ' 
     <div class="blog-masthead">
       <div class="container">
         <nav class="blog-nav">
-          <a class="blog-nav-item active" href="'.BASE_URL.'">Home</a>
+          <a class="blog-nav-item active" href="'.ADMIN_URL.'">Home</a>
           <a class="blog-nav-item" href="#">New features</a>
           <a class="blog-nav-item" href="#">Press</a>
           <a class="blog-nav-item" href="#">New hires</a>
@@ -120,40 +165,6 @@ class View {
       </div>
     </div>';
   }
-  // SIDEBAR
-  private function sidebar() {
-    return '
-        <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
-          <div class="sidebar-module sidebar-module-inset">
-            <h4>About</h4>
-            <p>'. fbvar('SITE_ABOUT').'</p>
-          </div>
-          <div class="sidebar-module">
-            <h4>Archives</h4>
-            <ol class="list-unstyled">
-              <li><a href="#">March 2014</a></li>
-              <li><a href="#">February 2014</a></li>
-              <li><a href="#">January 2014</a></li>
-              <li><a href="#">December 2013</a></li>
-              <li><a href="#">November 2013</a></li>
-              <li><a href="#">October 2013</a></li>
-              <li><a href="#">September 2013</a></li>
-              <li><a href="#">August 2013</a></li>
-              <li><a href="#">July 2013</a></li>
-              <li><a href="#">June 2013</a></li>
-              <li><a href="#">May 2013</a></li>
-              <li><a href="#">April 2013</a></li>
-            </ol>
-          </div>
-          <div class="sidebar-module">
-            <h4>Elsewhere</h4>
-            <ol class="list-unstyled">
-              <li><a href="https://github.com/jfreeman82/freeblog">GitHub</a></li>
-            </ol>
-          </div>
-        </div><!-- /.blog-sidebar -->';
-  }
-  
   
   /* 
    * SETTERS

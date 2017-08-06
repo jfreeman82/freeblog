@@ -24,24 +24,16 @@ class Controller {
       if (isset($this->routes[0]) && $this->routes[0] != "") {
         $route1 = $this->routes[0];
         switch ($route1) {
-          case "article":
-            if (isset($this->routes[1])) {
-              $aid = $this->routes[1];
-              $art_data = $this->model->article($aid);
-              $this->view->article($art_data);
-            }
-            else {
-              $this->view->warning('No AID set.');
-            }
-            break;
-          default: 
-            echo 'route1: '.$route1;
-            $arts = $this->model->articles_lastx(5);
+          case "articles":
+            $arts = $this->model->articles_all();
             $this->view->articles($arts);
+          default: 
+            //echo 'route1: '.$route1;
+            $this->view->front();
         }
       }
       else {
-        $arts = $this->model->articles_lastx(5);
+        $arts = $this->model->articles_all();
         $this->view->front($arts);
       }
     }
@@ -49,12 +41,15 @@ class Controller {
       $check = $this->model->fp_login();
       switch($check) {
         case 0:
+          echo 0;
           $this->view->login();
           break;
         case 1:
+          echo 1;
           $this->view->home();
           break;
         default:
+          echo 'default'; 
           $warning = $check['warning'];
           $this->view->login($warning);
       }
