@@ -7,19 +7,25 @@
  */
 class Model {
 
-  private $dbc;
-  
   public function __construct() {}
   
-  private function dbConnect() {
-    $this->dbc = new mysqli('localhost', MYSQL_USER, MYSQL_PASS, MYSQL_DB);
-  }
   
   public function articles_lastx($x) {
-    $this->dbConnect();
-    $sql = "SELECT id,title,article,date_created FROM articles ORDER BY date_created DESC LIMIT '$x';";
-    $q = $this->dbc->query($sql) or die("ERROR Model - ".$this->dbc->error());
-    
+    global $dbc;
+    $sql = "SELECT id FROM articles ORDER BY gendate,title DESC LIMIT $x ;";
+    $q = $dbc->query($sql) or die("ERROR Model - ".$dbc->error());
+    $out = array();
+    while ($row = $q->fetch_assoc()) {
+      $article = new Article($row['id']);
+      //var_dump($article->dataArray());
+      array_push($out, $article->dataArray());
+    }    
+    return $out;
+  }
+  
+  public function article($aid) {
+    $article = new Article($aid);
+    return $article->dataArray();
   }
   
 }
