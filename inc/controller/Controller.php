@@ -39,7 +39,8 @@ class Controller {
       }
     }
     else {
-      $this->view->front();
+          $arts = $this->model->articles_lastx(5);
+      $this->view->front($arts);
       
     }
   }
@@ -65,7 +66,7 @@ class Controller {
     $this->routes = explode('/', $base_url);
     foreach($this->routes as $route) {
       if(trim($route) != '') {
-        array_push($this->routes, $route);
+        array_push($this->routes, trim($route));
       }
     }
     array_pop($this->routes);

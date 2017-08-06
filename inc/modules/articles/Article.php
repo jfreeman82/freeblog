@@ -11,9 +11,10 @@ class Article {
   private $title;
   private $article;
   private $gendate;
+  private $uid;
   
   public function __construct($id) {
-    $sql = "SELECT title,article,gendate 
+    $sql = "SELECT title,article,gendate,uid 
             FROM articles 
             WHERE id = '$id';";
     global $dbc;
@@ -24,6 +25,7 @@ class Article {
     $this->title = $row['title'];
     $this->article = $row['article'];
     $this->gendate = $row['gendate'];
+    $this->uid = $row['uid'];
   }
   
   public function getTitle() {
@@ -35,13 +37,21 @@ class Article {
   public function getGenDate() {
     return $this->gendate;
   }
+  public function getUid() {
+    return $this->uid;
+  }
+  public function getUser() {
+    return new User($this->uid);
+  }
   
   public function dataArray() {
     return array(
-        'id' => $this->id,
-        'title' => $this->title,
+        'id'      => $this->id,
+        'title'   => $this->title,
         'article' => $this->article,
-        'gendate' => $this->gendate
+        'gendate' => $this->gendate,
+        'uid'     => $this->uid,
+        'username' => $this->getUser()->getUsername()
     );
   }
 }
