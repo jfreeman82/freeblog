@@ -1,12 +1,16 @@
 <?php
 
 // Error reporting
+ini_set('display_errors',1); 
 error_reporting(E_ALL);
-ini_set("error_reporting", E_ALL);
 
 // Constants
+define('MYSQL_DB','freeblog');
+define('MYSQL_USER','freebloguser');
+define('MYSQL_PASS','freebloguser12345');
+
 
 // Requires
-require_once 'inc/controller/Controller.php';
-require_once 'inc/model/Model.php';
-require_once 'inc/view/View.php';
+require_once 'controller/Controller.php';
+require_once 'model/Model.php';
+require_once 'view/View.php';
