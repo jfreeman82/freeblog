@@ -27,8 +27,8 @@ class Controller {
         $page = filter_input(INPUT_GET, 'page');
         switch ($page) {
           case "articles":
-            $arts = $this->model->articles_all();
-            $this->view->articlesList($arts);
+            $arts = $this->model->articles_allArray();
+            $this->view->articlesListArray($arts);
             break;
           case "article":
             if (filter_input(INPUT_GET, 'id') > 0) {
@@ -100,7 +100,7 @@ class Controller {
       switch($check) {
         case 0:
           echo 0;
-          $this->view->login();
+          $this->view->setBase('login');
           break;
         case 1:
           echo 1;
@@ -109,7 +109,8 @@ class Controller {
         default:
           echo 'default'; 
           $warning = $check['warning'];
-          $this->view->login($warning);
+          $this->view->setWarning($warning);
+          $this->view->setBase('login');
       }      
     }
   }

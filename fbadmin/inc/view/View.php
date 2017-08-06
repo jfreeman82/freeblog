@@ -7,13 +7,32 @@
  */
 class View {
 
+  private $base;
+
   private $content;
   private $css;
   private $title;
+  private $warning;
   
-
+  
   public function __construct() {
     $this->content = "";
+  }
+  
+  public function generate() {
+    // loads the base and all up and builds the output
+    if (!isset($this->base)) {
+      $this->base = "login";
+    }
+    
+    switch($this->base) {
+      case "dashboard":
+        $this->dashboard();
+        break;
+      default:
+        $this->login();
+    }
+    $this->page();
   }
   
   /*
@@ -44,7 +63,7 @@ class View {
         </div>
       </div>
     </div> <!-- /container -->';
-    $this->page();
+    
   }
   
   public function dashboard() {
@@ -73,7 +92,6 @@ class View {
         </div>
       </div>
     </div>';
-    $this->page();
   }
   
   
@@ -104,11 +122,12 @@ class View {
    *    
    */
   public function front() {
-    $content = ' 
+    $this->base = 'dashboard';
+    $this->content = ' 
       <h1>Home</h1>
       <p>The front page</p>
       ';
-    $this->dashboard();
+    $this->generate();
   }
   // articles - a list for articles
   public function articlesList($articles) {
@@ -142,6 +161,55 @@ class View {
       <a href="index.php?page=article&action=new" class="btn btn-primary">Add New Article</a>';
     $this->dashboard();
   }
+  
+  /* articles - a list for articles
+   * 
+   * array: ( 'title' => $title, 'data' => array( ,,,
+   */
+  public function articlesListArray(Array $articlesArray) {
+    //$this->title = 'Articles';
+    $this->title = $articlesArray['title'];
+    $this->base = 'dashboard';
+    
+    $articles = $articlesArray['data'];
+    $firstrow = array_pop($articles);
+    
+    $this->content .= '
+      <table class="table table-bordered">
+        <tr class="row">';
+    foreach($firstrow as $fr) {
+      $this->content .= '
+          <th>'.$fr.'</th>';
+    }
+    $this->content .= ' 
+        </tr>';
+    
+    foreach ($articles as $article) {
+      $this->content .= '
+        <tr class="row">';
+      foreach ($article as $a) {
+        $this->content .= '
+          <td>'.$a.'</td>';
+      }/*
+          <td><a href="index.php?page=article&id='. $article['id']  .'">'.  $article['id']                               .'</a></td>
+          <td><a href="index.php?page=article&id='. $article['id']  .'">'.  date("d/m/Y",strtotime($article['gendate'])) .'</a></td>
+          <td><a href="index.php?page=article&id='. $article['id']  .'">'.  $article['title']                            .'</a></td>
+          <td><a href="index.php?page=user&id='.    $article['uid'] .'">'.  $article['username']                         .'</a></td>
+          <td>
+            <a href="index.php?page=article&id='. $article['id']  .'&action=edit">  Edit  </a>&nbsp;
+            <a href="index.php?page=article&id='. $article['id']  .'&action=delete">Delete</a>
+          </td>*/
+      $this->content .= ' 
+        </tr>';      
+    }
+    
+    $this->content .= ' 
+      </table>
+      <a href="index.php?page=article&action=new" class="btn btn-primary">Add New Article</a>';
+    $this->generate();
+  }
+  
+  
   public function article($article) {
     $this->title = 'Article';
     $this->content = '
@@ -303,6 +371,7 @@ class View {
       </div>';
     $this->dashboard();
   }
+  
   public function user_editForm($user, $warning = "") {
     $this->title = 'Edit User';
     $this->content = '
@@ -351,7 +420,7 @@ class View {
     $this->dashboard();
   }
   
-  public function error($error) {
+  public function error(string $error) {
     $this->content = '
       <div class="alert alert-danger">'.$error.'</div>';
     $this->dashboard();
@@ -382,5 +451,11 @@ class View {
   public function setCss($css) {
     $this->css = '<link rel="stylesheet" href="'.$css.'"/>';
   }
-  
+  public function setBase(string $base) {
+    $this->base = $base;
+    $this->generate();
+  }
+  public function setWarning(string $warning) {
+    $this->warning = $warning;
+  }
 }
