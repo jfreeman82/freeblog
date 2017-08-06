@@ -22,3 +22,5 @@ require_once 'view/View.php';
 
 require_once 'modules/articles/Article.php';
 require_once 'modules/User.php';
+
+require_once 'modules/fbvars.php';
