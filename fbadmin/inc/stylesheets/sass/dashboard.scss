@@ -1,13 +1,23 @@
-/* 
-    Created on : Aug 6, 2017, 5:08:07 PM
-    Author     : myrmidex
-*/
-body {
-  background-color: blue;
-}
 
 .sidebar {
+  //border: thin solid black;
+  height: 100vh;
+  
+  .nav-title {
+    font-size: 15pt;
+    font-weight: bold;
+    margin: 10px auto;
+  }
+  
   ul {
-    margin-top: 120px;
+  }
+  
+}
+
+.main {
+  //border: thin solid black;
+  padding: 20px 20px;
+  h1.page-header {
+    margin-top: 0;
   }
 }

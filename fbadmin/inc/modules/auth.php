@@ -8,3 +8,9 @@ function isLoggedIn() {
     return FALSE;
   }
 }
+
+function logout() {
+  $_SESSION['uid'] = 0;
+  session_destroy();
+  header("Location: index.php");
+}

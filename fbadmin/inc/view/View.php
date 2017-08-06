@@ -48,48 +48,25 @@ class View {
   }
   
   public function dashboard() {
-    $this->setCss(ADMIN_URL."inc/stylesheets/dashboard.css");
+    $this->setCss(ADMIN_URL."inc/stylesheets/css/dashboard.css");
     $tmpcontent = $this->content;
     $this->content = '
       
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">'. fbvar('ADMIN_TITLE').'</a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Dashboard</a></li>
-            <li><a href="#">Settings</a></li>
-            <li><a href="#">Profile</a></li>
-            <li><a href="#">Help</a></li>
-          </ul>
-          <form class="navbar-form navbar-right">
-            <input type="text" class="form-control" placeholder="Search...">
-          </form>
-        </div>
-      </div>
-    </nav>
-
     <div class="container-fluid">
       <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
+        <div class="col-lg-2 col-md-3 col-sm-3 col-xs-4 sidebar">
+          <div class="nav-title">'.fbvar('ADMIN_TITLE').'</div>
+        
           <ul class="nav nav-sidebar">
-            <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
+            <li><a href="index.php?page=articles">Articles</a></li>
             <li><a href="#">Reports</a></li>
             <li><a href="#">Analytics</a></li>
-            <li><a href="#">Export</a></li>
+            <li><a href="index.php?action=logout">Log Out</a></li>
           </ul>
         </div>
         
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">Dashboard</h1>
+        <div class="col-lg-10 col-md-9 col-sm-9 col-xs-8 main">
+          <h1 class="page-header">'.$this->title.'</h1>
 
         '.$tmpcontent.' 
           
@@ -131,6 +108,69 @@ class View {
       <h1>Home</h1>
       <p>The front page</p>
       ';
+    $this->dashboard();
+  }
+  // articles - a list for articles
+  public function articlesList($articles) {
+    $this->title = 'Articles';
+    $this->content .= '
+      <table class="table table-bordered">
+        <tr class="row">
+          <th class="col-lg-1">id</th>
+          <th class="col-lg-1">date</th>
+          <th class="col-lg-8">title</th>
+          <th class="col-lg-2">user</th>
+        </tr>';
+    
+    foreach ($articles as $article) {
+      $this->content .= '
+        <tr class="row">
+          <td><a href="index.php?page=article&id='. $article['id']  .'">'.  $article['id']                               .'</a></td>
+          <td><a href="index.php?page=article&id='. $article['id']  .'">'.  date("d/m/Y",strtotime($article['gendate'])) .'</a></td>
+          <td><a href="index.php?page=article&id='. $article['id']  .'">'.  $article['title']                            .'</a></td>
+          <td><a href="index.php?page=user&id='.    $article['uid'] .'">'.  $article['username']                         .'</a></td>
+        </tr>';      
+    }
+    
+    $this->content .= ' 
+      </table>';
+    $this->dashboard();
+  }
+  public function article($article) {
+    $this->title = 'Article';
+    $this->content = '
+      <article>
+        <h1>'.$article['title'].'</h1>
+        <div class="art-info">posted on '.date("M d, Y", strtotime($article['gendate'])).' by '.$article['username'].'</div>
+        <div class="art-body">'.$article['article'].'</div>        
+      </article>';
+    $this->dashboard();
+  }
+  public function article_edit($article) {
+    $this->title = 'Edit Article';
+    $this->content = '
+      <div class="row">
+        <div class="col-lg-8">
+      <form action="index.php?page=article&id='.$article['id'].'&action=edit" method="POST">
+        <div class="form-group">
+          <label for="ea_title">Title</label>
+          <input type="text" name="ea_title" id="ea_title" class="form-control" value="'.$article['title'].'"/>
+        </div>
+        <div class="form-group">
+          <label for="ea_article">Article</label>
+          <textarea name="ea_article" id="ea_article" class="form-control">'.$article['article'].'</textarea>
+        </div>
+        <input type="hidden" name="aeform" value="go" />
+        <input type="submit" value="Edit" class="btn btn-primary"/>
+      </form>
+      </div>
+      </div>';
+    $this->dashboard();
+  }
+  
+  public function error($error) {
+    $this->content = '
+      <div class="alert alert-danger">'.$error.'</div>';
     $this->dashboard();
   }
   

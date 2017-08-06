@@ -19,14 +19,15 @@ class Controller {
     if (filter_input(INPUT_GET, 'page')) {
       $page = filter_input(INPUT_GET, 'page');
       switch ($page) {
-        case "article":
-          if (isset($this->routes[1])) {
-            $aid = $this->routes[1];
+        case "articles":
+          if (filter_input(INPUT_GET, 'id')) {
+            $aid = filter_input(INPUT_GET, 'id');
             $art_data = $this->model->article($aid);
             $this->view->article($art_data);
           }
           else {
-            $this->view->warning('No AID set.');
+            $art_data = $this->model->articles_all();
+            $this->view->articles($arts);
           }
           break;
         default: 

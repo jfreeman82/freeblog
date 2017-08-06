@@ -9,15 +9,17 @@ class Controller {
   private $model;
   private $view;
   
-  private $routes;
   
   public function __construct() {
     $this->model = new Model();
     $this->view = new View();
-    $this->routes();
   }
 
   public function invoke() {
+    if (filter_input(INPUT_GET,'action') == "logout") {
+      logout();
+    }
+    
     
     if (isLoggedIn()) {
     
@@ -26,7 +28,22 @@ class Controller {
         switch ($page) {
           case "articles":
             $arts = $this->model->articles_all();
-            $this->view->articles($arts);
+            $this->view->articlesList($arts);
+            break;
+          case "article":
+            if (filter_input(INPUT_GET, 'id') > 0) {
+              $art = $this->model->article(filter_input(INPUT_GET,'id'));
+              if (filter_input(INPUT_GET, 'action') == "edit") {
+                $this->view->article_edit($art);
+              }
+              else {                
+                $this->view->article($art);              
+              }
+            }
+            else {
+              $this->view->error('No ArticleID Set.');
+            }
+            break;
           default: 
             //echo 'route1: '.$route1;
             $this->view->front();
@@ -46,7 +63,7 @@ class Controller {
           break;
         case 1:
           echo 1;
-          $this->view->home();
+          $this->view->dashboard();
           break;
         default:
           echo 'default'; 
