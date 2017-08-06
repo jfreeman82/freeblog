@@ -19,7 +19,7 @@ class Controller {
 
   public function invoke() {
     
-    if (isset($this->routes[0])) {
+    if (isset($this->routes[0]) && $this->routes[0] != "") {
       $route1 = $this->routes[0];
       switch ($route1) {
         case "article":
@@ -33,13 +33,14 @@ class Controller {
           }
           break;
         default: 
+          echo 'route1: '.$route1;
           $arts = $this->model->articles_lastx(5);
-          $this->view->articles_lastx($arts);
+          $this->view->articles($arts);
       }
     }
     else {
-//      $this->view->front();
-      echo implode(' / ', $this->routes);
+      $this->view->front();
+      
     }
   }
 
