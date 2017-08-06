@@ -20,11 +20,44 @@ class Model {
     return $out;
   }
   
-  public function article($aid) {
+  public function articles_arraytable(): Array {
+    global $dbc;
+    $sql = "SELECT id FROM articles ORDER BY gendate,title DESC;";
+    $q = $dbc->query($sql) or die("ERROR Model - ".$dbc->error());
+    $data = array();
+    $data[] = array(
+                array('value' => 'id',        'class' => 'col-lg-1'),
+                array('value' => 'title',     'class' => ''),
+                array('value' => 'username',  'class' => 'col-lg-1'),
+                array('value' => 'actions',   'class' => 'col-lg-1')
+              );
+    while ($row = $q->fetch_assoc()) {
+      $art = new Article($row['id']);
+      $data[] = array($row['id'], $art->getTitle(), $art->getUser()->getUsername(), 'action');
+    }    
+    $out['title'] = 'articles';
+    $out['table-class'] = 'table table-bordered';
+    $out['data'] = $data;
+    $out['footer'] = '  
+      <a href="index.php?page=article&action=new" class="btn btn-primary">Add New Article</a>';
+    //var_dump($out);
+    return $out;
+    
+  }
+  // Obsolete - use articleArray instead
+  public function article(int $aid): Array {
     $article = new Article($aid);
     return $article->dataArray();
   }
-  
+  // Newest version of article
+  public function articleArray(int $aid): Array {
+    $article = new Article($aid);
+    return $article->dataArray();
+  }
+  // new article Object donation
+  public function articleObject(int $aid): Article {
+    return new Article($aid);
+  }
   /* FORM PROCESSORS */
   
   /* fp_login
@@ -39,7 +72,7 @@ class Model {
       global $dbc;
       $q = $dbc->query($sql) or die("ERROR Model / fp_login - ".$dbc->error());
       if ($q->num_rows == 0) {
-        return array('warning' => 'Username: '.$email.' / Password ('.$password.') combination not found.');
+        return array('warning' => 'Username / Password combination not found.');
       }
       else {
         $uid = $q->fetch_assoc()['id'];

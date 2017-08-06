@@ -19,35 +19,19 @@ class View {
     $this->content = "";
   }
   
-  public function generate() {
-    // loads the base and all up and builds the output
-    if (!isset($this->base)) {
-      $this->base = "login";
-    }
-    
-    switch($this->base) {
-      case "dashboard":
-        $this->dashboard();
-        break;
-      default:
-        $this->login();
-    }
-    $this->page();
-  }
-  
   /*
    * Lay-Outs
    */
-  public function login($warning = "") {
+  public function login() {
     $this->content .= '
       <br><br><br><br>
     <div class="container">
       <div class="row">
         <div class="col-lg-4 col-lg-offset-4">';
           
-    if ($warning != "") {
+    if (isset($this->warning) && $this->warning != "") {
       $this->content .= '
-        <div class="alert alert-danger text-center">'.$warning.'</div>';
+        <div class="alert alert-danger text-center">'.$this->warning.'</div>';
     }
     $this->content .= ' 
       <form class="form-signin" action="'.ADMIN_URL.'" method="POST">
@@ -63,7 +47,7 @@ class View {
         </div>
       </div>
     </div> <!-- /container -->';
-    
+    $this->page();
   }
   
   public function dashboard() {
@@ -92,8 +76,7 @@ class View {
         </div>
       </div>
     </div>';
-  }
-  
+  }  
   
   private function page() {
     echo  '<!DOCTYPE html>
@@ -117,17 +100,17 @@ class View {
   </body>
 </html>';
   }
+  
   /* 
    * Pages
    *    
    */
   public function front() {
-    $this->base = 'dashboard';
     $this->content = ' 
       <h1>Home</h1>
       <p>The front page</p>
       ';
-    $this->generate();
+    $this->dashboard();
   }
   // articles - a list for articles
   public function articlesList($articles) {
@@ -166,47 +149,15 @@ class View {
    * 
    * array: ( 'title' => $title, 'data' => array( ,,,
    */
-  public function articlesListArray(Array $articlesArray) {
+  public function tableArray(Array $array) {
+    require_once 'inc/modules/arraytable.php';
     //$this->title = 'Articles';
-    $this->title = $articlesArray['title'];
+    $this->title = $array['title'];
     $this->base = 'dashboard';
+    $this->content .= array2table($array);
     
-    $articles = $articlesArray['data'];
-    $firstrow = array_pop($articles);
-    
-    $this->content .= '
-      <table class="table table-bordered">
-        <tr class="row">';
-    foreach($firstrow as $fr) {
-      $this->content .= '
-          <th>'.$fr.'</th>';
-    }
-    $this->content .= ' 
-        </tr>';
-    
-    foreach ($articles as $article) {
-      $this->content .= '
-        <tr class="row">';
-      foreach ($article as $a) {
-        $this->content .= '
-          <td>'.$a.'</td>';
-      }/*
-          <td><a href="index.php?page=article&id='. $article['id']  .'">'.  $article['id']                               .'</a></td>
-          <td><a href="index.php?page=article&id='. $article['id']  .'">'.  date("d/m/Y",strtotime($article['gendate'])) .'</a></td>
-          <td><a href="index.php?page=article&id='. $article['id']  .'">'.  $article['title']                            .'</a></td>
-          <td><a href="index.php?page=user&id='.    $article['uid'] .'">'.  $article['username']                         .'</a></td>
-          <td>
-            <a href="index.php?page=article&id='. $article['id']  .'&action=edit">  Edit  </a>&nbsp;
-            <a href="index.php?page=article&id='. $article['id']  .'&action=delete">Delete</a>
-          </td>*/
-      $this->content .= ' 
-        </tr>';      
-    }
-    
-    $this->content .= ' 
-      </table>
-      <a href="index.php?page=article&action=new" class="btn btn-primary">Add New Article</a>';
-    $this->generate();
+    if (isset($array['footer'])) {$this->content .= $array['footer'];}
+    $this->dashboard();
   }
   
   
@@ -227,6 +178,7 @@ class View {
   
   public function article_newForm($warning = "") {
     $this->title = 'New Article';
+    $this->base = 'dashboard';
     $this->content = '
       <div class="row">
         <div class="col-lg-8">';
@@ -249,7 +201,7 @@ class View {
       </form>
       </div>
       </div>';
-    $this->dashboard();
+    $this->generate();
   }
   public function article_editForm($article,$warning = "") {
     $this->title = 'Edit Article';

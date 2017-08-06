@@ -27,8 +27,8 @@ class Controller {
         $page = filter_input(INPUT_GET, 'page');
         switch ($page) {
           case "articles":
-            $arts = $this->model->articles_allArray();
-            $this->view->articlesListArray($arts);
+            $arts = $this->model->articles_arraytable();
+            $this->view->tableArray($arts);
             break;
           case "article":
             if (filter_input(INPUT_GET, 'id') > 0) {
@@ -87,7 +87,7 @@ class Controller {
             break;
           default: 
             //echo 'route1: '.$route1;
-            $this->view->front();
+            $this->view->setBase('dashboard');
         }
       }
       else {
@@ -99,18 +99,17 @@ class Controller {
       $check = $this->model->fp_login();
       switch($check) {
         case 0:
-          echo 0;
-          $this->view->setBase('login');
+          //echo 0;
+          $this->view->login();
           break;
         case 1:
-          echo 1;
-          $this->view->dashboard();
+          $this->view->front();
           break;
         default:
-          echo 'default'; 
+          //echo 'default'; 
           $warning = $check['warning'];
           $this->view->setWarning($warning);
-          $this->view->setBase('login');
+          $this->view->login();
       }      
     }
   }
