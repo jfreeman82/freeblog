@@ -52,4 +52,63 @@ class Model {
     }
   }
   
+  public function fp_articleNew() {
+    if (filter_input(INPUT_POST, 'anform') == "go") {
+      $title = filter_input(INPUT_POST, 'an_title');
+      $article = filter_input(INPUT_POST, 'an_article');
+      if ($title == "" || $article == "") { return array('warning' => 'Some fields were empty.');}
+      $uid = $_SESSION['uid'];
+      $sql = "INSERT INTO articles (title,article,uid,gendate) VALUES ('$title','$article','$uid',NOW());";
+      global $dbc;
+      if ($dbc->query($sql)) {
+        return 1;
+      }
+      else {
+        return array('warning' => $dbc->error());
+      }      
+    }
+    else {
+      return 0;
+    }
+  }
+  public function fp_articleEdit() {
+    if (filter_input(INPUT_POST, 'aeform') == "go") {
+      if (!filter_input(INPUT_GET, 'id')) { return array('warning' => 'ArticleID missing.'); }
+      $aid = filter_input(INPUT_GET, 'id');
+      $title = filter_input(INPUT_POST, 'ae_title');
+      $article = filter_input(INPUT_POST, 'ae_article');
+      if ($title == "" || $article == "") {return array('warning' => 'Some fields were empty.');}
+      $sql = "UPDATE articles  SET title = '$title', article = '$article'
+              WHERE id = '$aid';";
+      global $dbc;
+      if ($dbc->query($sql)) {
+        return 1;
+      }
+      else {
+        return array('warning' => $dbc->error());
+      }
+    }
+    else {
+      return 0;
+    }
+  }
+  public function fp_articleDelete() {
+    if (filter_input(INPUT_POST, 'adform') == "go") {
+      if (!filter_input(INPUT_GET, 'id')) { return array('warning' => 'articleID missing.'); }
+      $aid = filter_input(INPUT_GET, 'id');
+      $sql = "DELETE FROM articles WHERE id = '$aid';";
+      global $dbc;
+      if ($dbc->query($sql)) {
+        return 1;
+      }
+      else {
+        return array('warning' => $dbc->error());
+      }
+    }
+    else {
+      return 0;
+    }
+  }
+  
+  
 }

@@ -34,14 +34,55 @@ class Controller {
             if (filter_input(INPUT_GET, 'id') > 0) {
               $art = $this->model->article(filter_input(INPUT_GET,'id'));
               if (filter_input(INPUT_GET, 'action') == "edit") {
-                $this->view->article_edit($art);
+                $check = $this->model->fp_articleedit();
+                switch($check) {
+                  case 0:
+                    $this->view->article_editForm($art);
+                    break;
+                  case 1:
+                    $art = $this->model->article(filter_input(INPUT_GET,'id'));
+                    $this->view->article($art);
+                    break;
+                  default:
+                    $this->view->article_editForm($check['warning']);
+                }
+              }
+              elseif (filter_input(INPUT_GET, 'action') == "delete") {
+                $check = $this->model->fp_articledelete();
+                switch($check) {
+                  case 0:
+                    $this->view->article_deleteForm($art);
+                    break;
+                  case 1:
+                    $arts = $this->model->articles_all();
+                    $this->view->articlesList($arts);
+                    break;
+                  default:
+                    $this->view->article_deleteForm($check['warning']);
+                }
               }
               else {                
                 $this->view->article($art);              
               }
             }
             else {
-              $this->view->error('No ArticleID Set.');
+              if (filter_input(INPUT_GET, 'action') == "new") {
+                $check = $this->model->fp_articleNew();
+                switch($check) {
+                  case 0:
+                    $this->view->article_newForm();
+                    break;
+                  case 1:
+                    $arts = $this->model->articles_all();
+                    $this->view->articlesList($arts);
+                    break;
+                  default:
+                    $this->view->article_newForm($check['warning']);
+                }
+              }
+              else {
+                $this->view->error('No ArticleID Set.');
+              }
             }
             break;
           default: 
