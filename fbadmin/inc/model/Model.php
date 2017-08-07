@@ -12,32 +12,6 @@ class Model {
 
   public function __construct() {}
   
-  // arraytable_all_users
-  
-    public function arraytable_all_users(): Array 
-    {
-        global $dbc;
-        $sql = "SELECT id FROM users ORDER BY gendate,username DESC;";
-        $q = $dbc->query($sql) or die("ERROR Model - ".$dbc->error());
-        $data = array();
-        $data[] = array(
-                array('value' => 'id',        'class' => 'col-lg-2'),
-                array('value' => 'username',  'class' => 'col-lg-8'),
-                array('value' => 'actions',   'class' => 'col-lg-2')
-              );
-        
-        while ($row = $q->fetch_assoc()) {
-            $user = new User($row['id']);
-            $data[] = array($row['id'], $user->getUsername(),'action');
-        }    
-        $out['title'] = 'articles';
-        $out['table-class'] = 'table table-bordered';
-        $out['data'] = $data;
-        $out['footer'] = '  
-      <a href="index.php?page=user&action=new" class="btn btn-primary">Add New User</a>';
-    
-        return $out;
-  }
   
   /* FORM PROCESSORS */
   
@@ -45,7 +19,8 @@ class Model {
    * 
    *  processes login form
    */
-    public function fp_login() {
+    public function fp_login() 
+    {
         if (filter_input(INPUT_POST, 'loginform') == "go") {
             $email = filter_input(INPUT_POST, 'lf_email');
             $password = hash('sha256',filter_input(INPUT_POST, 'lf_password'));
@@ -66,4 +41,50 @@ class Model {
         }
     }
   
+    /*
+     * Form Arrays
+     * 
+     * returns the build-array of the form function
+     */
+    public function formArray_login(): Array
+    {
+        return array(
+            'form-class'    => 'form-signin',
+            'form-action'   => ADMIN_URL,
+            'form-title'    => 'Please sign in',
+            'form-title-class' => 'form-signin-heading',
+            'elements'      => array(
+                array(
+                    'type'          => 'email',
+                    'name'          => 'lf_email',
+                    'id'            => 'lf_email',
+                    'class'         => 'form-control',
+                    'setlabel'      => 1,
+                    'label'         => 'Email Address',
+                    'label-class'   => 'sr-only'
+                ),
+                array(
+                    'type'          => 'password',
+                    'name'          => 'lf_password',
+                    'id'            => 'lf_password',
+                    'class'         => 'form-control',
+                    'setlabel'      => 1,
+                    'label'         => 'Password',
+                    'label-class'   => 'sr-only'
+                ),
+                array(
+                    'type'  => 'hidden',
+                    'name'  => 'loginform',
+                    'value' => 'go'
+                ),
+                array(
+                    'type'  => 'submit',
+                    'class' => 'btn btn-lg btn-primary btn-block',
+                    'value' => 'Sign in'
+                )
+            )
+        );
+    }
+    
+    
 }

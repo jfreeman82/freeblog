@@ -22,7 +22,12 @@ class View {
      * Lay-Outs
      *      
      */
-    public function dashboard(): void 
+    public function bare()
+    {
+        $this->page();
+    }
+    
+    public function dashboard() 
     {
         $this->setCss(ADMIN_URL."inc/stylesheets/css/dashboard.css");
         $tmpcontent = $this->content;
@@ -52,7 +57,7 @@ class View {
         $this->page();
   }  
   
-    private function page(): void 
+    private function page()
     {
         echo  '<!DOCTYPE html>
 <html lang="en">
@@ -81,36 +86,26 @@ class View {
    *    To fill the Lay-Outs
    *    
    */
-    public function login(): void
-    {
-        $this->content .= '
-      <br><br><br><br>
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-4 col-lg-offset-4">';
-          
-        if (isset($this->warning) && $this->warning != "") {
-            $this->content .= '
-        <div class="alert alert-danger text-center">'.$this->warning.'</div>';
-        }
-        $this->content .= ' 
-      <form class="form-signin" action="'.ADMIN_URL.'" method="POST">
-        <h2 class="form-signin-heading">Please sign in</h2>
-        <label for="lf_email" class="sr-only">Email address</label>
-        <input type="email" id="lf_email" name="lf_email" class="form-control" placeholder="Email address" required autofocus>
-        <label for="lf_password" class="sr-only">Password</label>
-        <input type="password" id="lf_password" name="lf_password" class="form-control" placeholder="Password" required>
-        <input type="hidden" name="loginform" value="go" />
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-      </form>
+    public function login(Array $formArray) {
+        require_once 'inc/modules/arrayform.php';
         
+        $this->content = '
+    <br><br><br><br>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-lg-offset-4">';
+          
+        $this->content .= \FreeBlog\Admin\Modules\Arrays\array2form($formArray);
+        
+        $this->content .= '
+            </div>
         </div>
-      </div>
-    </div> <!-- /container -->';
-        $this->page();
+    </div>';
+        $this->bare();
     }
-  
-    public function front(): void 
+    
+    // Front
+    public function front() 
     {
         $this->content = ' 
       <h1>Home</h1>
@@ -118,7 +113,12 @@ class View {
         $this->dashboard();
     }
   
-    public function tableArray(Array $array): void 
+    
+    /* Table Array
+     * 
+     *  Makes a table from an array
+     */
+    public function tableArray(Array $array) 
     {
         require_once 'inc/modules/arraytable.php';
         $this->title = $array['title'];
@@ -131,7 +131,7 @@ class View {
   
     
     // Single error within dashboard. a 404...
-    public function error(string $error): void 
+    public function error(string $error) 
     {
         $this->content = '
       <div class="alert alert-danger">'.$error.'</div>';

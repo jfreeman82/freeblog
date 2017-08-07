@@ -2,6 +2,8 @@
 
 namespace FreeBlog\Admin\Model;
 
+use FreeBlog\Articles\Article as Article;
+
 /**
  * Description of ArticleModel
  *
@@ -73,8 +75,6 @@ class ArticleModel extends Model
      * 
      * 
      */
-    
-    
     public function fp_articleNew()
     {
         if (filter_input(INPUT_POST, 'anform') == "go") {
@@ -136,4 +136,46 @@ class ArticleModel extends Model
       return 0;
     }
   }
+  
+    /*
+     * Form Arrays
+     * 
+     */
+    public function formArray_articleNew()
+    {
+        return array (
+            'form-action'   => 'index.php?page=article&action=new',
+            'form-title'    => 'New Article',
+            'elements'      => array(
+                array(
+                    'type'          => 'text',
+                    'name'          => 'an_title',
+                    'id'            => 'an_title',
+                    'class'         => 'form-control',
+                    'placeholder'   => 'Title',
+                    'setlabel'      => 1,
+                    'label'         => 'Title'
+                ),
+                array(
+                    'type'  => 'textarea',
+                    'name'  => 'an_article',
+                    'id'    => 'an_article',
+                    'class' => 'form-control',
+                    'placeholder' => 'Article',
+                    'setlabel' => 1,
+                    'label' => 'Article'
+                ),
+                array(
+                    'type'  => 'hidden',
+                    'name'  => 'anform',
+                    'value' => 'go'
+                ),
+                array(
+                    'type'  => 'submit',
+                    'value' => 'Add Article',
+                    'class' => 'btn btn-primary'
+                )
+            )
+        );
+    }
 }

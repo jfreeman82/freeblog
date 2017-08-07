@@ -56,7 +56,8 @@ class Controller {
             $check = $this->model->fp_login();
             switch($check) {
                 case 0:
-                    $this->view->login();
+                    $loginArr = $this->model->formArray_login();
+                    $this->view->login($loginArr);
                     break;
                 case 1:
                     $this->view->front();
@@ -64,7 +65,8 @@ class Controller {
                 default:
                     $warning = $check['warning'];
                     $this->view->setWarning($warning);
-                    $this->view->login();
+                    $loginArr = $this->model->formArray_login();
+                    $this->view->login($loginArr);
             }      
         }
     }

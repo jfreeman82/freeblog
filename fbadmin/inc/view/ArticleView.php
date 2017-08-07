@@ -81,7 +81,7 @@ class ArticleView extends View
       </form>
       </div>
       </div>';
-    $this->generate();
+    $this->dashboard();
   }
   public function article_editForm($article,$warning = "") {
     $this->title = 'Edit Article';
