@@ -4,6 +4,8 @@ namespace FreeBlog\Admin\Controller;
 use FreeBlog\Admin\Model\ArticleModel as ArticleModel;
 use FreeBlog\Admin\View\ArticleView as ArticleView;
 
+use FreeBlog\Articles\Article as Article;
+
 /**
  * Description of ArticleController
  *
@@ -24,17 +26,16 @@ class ArticleController
     {
         $page = filter_input(INPUT_GET, 'page');
         if ($page == 'articles') {
-            $arts = $this->model->articles_arraytable();
-            $this->view->tableArray($arts);
+            $this->articles_list();
         }
         else { // article       
             if (filter_input(INPUT_GET, 'id') > 0) {
                 $art = $this->model->article(filter_input(INPUT_GET,'id'));
                 if (filter_input(INPUT_GET, 'action') == "edit") {
-                    $this->userform_edit();
+                    $this->article_edit($art);
                 }
                 elseif (filter_input(INPUT_GET, 'action') == "delete") {
-                    $this->userform_delete();
+                    $this->article_delete($art);
                 }
                 else {                
                     $this->view->article($art);              
@@ -42,7 +43,7 @@ class ArticleController
             }
             else {
                 if (filter_input(INPUT_GET, 'action') == "new") {
-                    $this->userform_new();
+                    $this->article_new();
                 }
                 else {
                     $this->view->error('No ArticleID Set.');
@@ -51,32 +52,36 @@ class ArticleController
         }
     }
     
-    private function userform_new(): void
+    private function articles_list() 
+    {
+        $arts = $this->model->articles_arraytable();
+        $this->view->tableArray($arts);
+    }
+    
+    private function article_new()
     {
         $check = $this->model->fp_articleNew();
-        switch($check) {
-            case 0:
+        switch($check['status']) {
+            case '0':
                 $this->view->article_newForm();
                 break;
-            case 1:
-                $arts = $this->model->articles_all();
-                $this->view->articlesList($arts);
+            case '1':
+                $this->articles_list();
                 break;
             default:
                 $this->view->article_newForm($check['warning']);
         }
     }
 
-    private function userform_edit(): void
+    private function article_edit(Article $art)
     {
         $check = $this->model->fp_articleedit();
-        switch($check) {
-            case 0:
+        switch($check['status']) {
+            case '0':
                 $this->view->article_editForm($art);
                 break;  
-            case 1:
-                $art = $this->model->article(filter_input(INPUT_GET,'id'));
-                $this->view->article($art);
+            case '1':
+                $this->articles_list();
                 break;
             default:
                 $this->view->article_editForm($check['warning']);
@@ -84,16 +89,15 @@ class ArticleController
     }
     
     
-    private function userform_delete(): void
+    private function article_delete(Article $art): void
     {
         $check = $this->model->fp_articledelete();
-        switch($check) {
-            case 0:
+        switch($check['status']) {
+            case '0':
                 $this->view->article_deleteForm($art);
                 break;
-            case 1:
-                $arts = $this->model->articles_all();
-                $this->view->articlesList($arts);
+            case '1':
+                $this->articles_list();
                 break;
             default:
                 $this->view->article_deleteForm($check['warning']);
