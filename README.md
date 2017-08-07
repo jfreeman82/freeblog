@@ -3,9 +3,7 @@ A Free and Open Source blog platform
 
 ## Installation
 ### Dependencies
-- mod rewrite
-- mysql-server
-- php-mysql
+Tested on the usual LAMP stack.
 
 ### Install
-Just clone it into the preferred dir. Make sure mod rewrite is enabled.
+Just clone it into the preferred dir. There is no installation script for now, so the databases need to be created manually.
