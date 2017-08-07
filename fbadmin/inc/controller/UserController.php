@@ -59,12 +59,13 @@ class UserController
     {
         $check = $this->model->fp_userNew();
         switch ($check['status']) {
-            case 0:
+            case '0':
+                echo 'status: '.$check['status'];
                 $this->view->user_newForm();
                 break;
-            case 1:
+            case '1':
                 $users = $this->model->arraytable_all_users();
-                $this->view->tableArray($array);
+                $this->view->tableArray($users);
                 break;
             default:
                 $this->view->user_newForm($check['warning']);                
@@ -74,12 +75,12 @@ class UserController
     {
         $check = $this->model->fp_userEdit();
         switch ($check['status']) {
-            case 0:
+            case '0':
                 $this->view->user_editForm();
                 break;
-            case 1:
+            case '1':
                 $users = $this->model->arraytable_all_users();
-                $this->view->tableArray($array);
+                $this->view->tableArray($users);
                 break;
             default:
                 $this->view->user_editForm($check['warning']);                
@@ -89,12 +90,12 @@ class UserController
     {
         $check = $this->model->fp_userDelete();
         switch ($check['status']) {
-            case 0:
+            case '0':
                 $this->view->user_deleteForm();
                 break;
-            case 1:
+            case '1':
                 $users = $this->model->arraytable_all_users();
-                $this->view->tableArray($array);
+                $this->view->tableArray($users);
                 break;
             default:
                 $this->view->user_deleteForm($check['warning']);                

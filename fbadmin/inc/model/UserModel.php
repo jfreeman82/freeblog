@@ -45,4 +45,90 @@ class UserModel extends Model
     {
         return new User($uid);
     }
+    
+    /* Form Processors
+     * 
+     *  Already in the 'new' style, with the typed Array output
+     */
+    public function fp_userNew(): Array 
+    {
+        if (filter_input(INPUT_POST, 'unform') == "go") {
+            $username = filter_input(INPUT_POST, 'un_username');
+            $password1 = filter_input(INPUT_POST, 'un_password1');
+            $password2 = filter_input(INPUT_POST, 'un_password2');
+            $email = filter_input(INPUT_POST, 'un_email');
+            if ($username == "" || $email == "" || $password1 == "") {
+                return array('status' => 'warning', 'warning' => 'Some fields were empty');
+            }
+            if ($password1 != $password2) {
+                return array('status' => 'warning', 'warning' => 'Passwords do not match.');
+            }
+            $pwd = hash('sha256',$password1);
+            $sql = "INSERT INTO users (username,password,email,gendate) 
+                    VALUES ('$username','$pwd','$email',NOW());";
+            global $dbc;
+            if ($dbc->query($sql)) {
+                return array('status' => '1');
+            }
+            else {
+                return array('status' => 'warning', 'warning' => $dbc->error());
+            }
+        }
+        else {
+            return array('status' => '0');
+        }
+    }
+    
+    public function fp_userEdit(): Array
+    {
+        if (filter_input(INPUT_POST, 'ueform') == "go") {
+            if (!filter_input(INPUT_GET, 'id')) { return array('status' => 'warning', 'warning' => 'UserID missing.');}
+            $uid = filter_input(INPUT_GET, 'id');
+            $username = filter_input(INPUT_POST, 'ue_username');
+            $password1 = filter_input(INPUT_POST, 'ue_password1');
+            $password2 = filter_input(INPUT_POST, 'ue_password2');
+            $email = filter_input(INPUT_POST, 'ue_email');
+            if ($username == "" || $email == "" || $password1 == "") {
+                return array('status' => 'warning', 'warning' => 'Some fields were empty');
+            }
+            if ($password1 != $password2) {
+                return array('status' => 'warning', 'warning' => 'Passwords do not match.');
+            }
+            $pwd = hash('sha256',$password1);
+            $sql = "UPDATE users 
+                    SET username = '$username', password = '$pwd', email = '$email'
+                    WHERE id = '$uid';";
+            global $dbc;
+            if ($dbc->query($sql)) {
+                return array('status' => '1');
+            }
+            else {
+                return array('status' => 'warning', 'warning' => $dbc->error());
+            }
+        }
+        else {
+            return array('status' => '0');
+        }
+    }
+    
+    public function fp_userDelete(): Array
+    {
+        if (filter_input(INPUT_POST, 'udform') == "go") {
+            if (!filter_input(INPUT_GET, 'id')) { return array('status' => 'warning', 'warning' => 'UserID missing'); }
+            $uid = filter_input(INPUT_GET, 'id');
+            $sql = "DELETE FROM users WHERE id = '$uid';";
+            global $dbc;
+            if ($dbc->query($sql)) {
+                return array('status' => '1');
+            }
+            else {
+                return array('status' => 'warning', 'warning' => $dbc->error());
+            }
+        }
+        else {
+            return array('status' => '0');
+        }
+    }
+    
+    
 }
