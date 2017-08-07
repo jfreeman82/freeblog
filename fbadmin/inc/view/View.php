@@ -88,10 +88,9 @@ class View {
    */
     public function login(Array $formArray) {
         require_once 'inc/modules/arrayform.php';
-        
+        $this->setCss('inc/stylesheets/css/login.css');
         $this->content = '
-    <br><br><br><br>
-    <div class="container">
+    <div class="container" id="login">
         <div class="row">
             <div class="col-lg-4 col-lg-offset-4">';
           

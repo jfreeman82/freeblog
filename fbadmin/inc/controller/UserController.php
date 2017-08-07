@@ -4,6 +4,8 @@ namespace FreeBlog\Admin\Controller;
 use FreeBlog\Admin\Model\UserModel as UserModel;
 use FreeBlog\Admin\View\UserView as UserView;
 
+use FreeBlog\Admin\Modules\User\User as User;
+
 /**
  * Description of UserController
  *
@@ -27,11 +29,12 @@ class UserController
             if (filter_input(INPUT_GET, 'id')) {
                 // view user profile
                 $uid = filter_input(INPUT_GET, 'id');
+                $user = new User($uid);  
                 if (filter_input(INPUT_GET, 'action') == "edit") {
-                    $this->editUser();
+                    $this->editUser($user);
                 }
                 elseif (filter_input(INPUT_GET, 'action') == "delete") {
-                    $this->deleteUser();
+                    $this->deleteUser($user);
                 }
                 else {                
                     $this->view->user( $this->model->user($uid) );
@@ -59,45 +62,46 @@ class UserController
     {
         $check = $this->model->fp_userNew();
         switch ($check['status']) {
-            case 0:
+            case '0':
+                echo 'status: '.$check['status'];
                 $this->view->user_newForm();
                 break;
-            case 1:
+            case '1':
                 $users = $this->model->arraytable_all_users();
-                $this->view->tableArray($array);
+                $this->view->tableArray($users);
                 break;
             default:
                 $this->view->user_newForm($check['warning']);                
         }
     }
-    private function editUser()
+    private function editUser(User $user)
     {
         $check = $this->model->fp_userEdit();
         switch ($check['status']) {
-            case 0:
-                $this->view->user_editForm();
+            case '0':
+                $this->view->user_editForm($user);
                 break;
-            case 1:
+            case '1':
                 $users = $this->model->arraytable_all_users();
-                $this->view->tableArray($array);
+                $this->view->tableArray($users);
                 break;
             default:
-                $this->view->user_editForm($check['warning']);                
+                $this->view->user_editForm($user, $check['warning']);                
         }
     }
-    private function deleteUser() 
+    private function deleteUser(User $user) 
     {
         $check = $this->model->fp_userDelete();
         switch ($check['status']) {
-            case 0:
-                $this->view->user_deleteForm();
+            case '0':
+                $this->view->user_deleteForm($user);
                 break;
-            case 1:
+            case '1':
                 $users = $this->model->arraytable_all_users();
-                $this->view->tableArray($array);
+                $this->view->tableArray($users);
                 break;
             default:
-                $this->view->user_deleteForm($check['warning']);                
+                $this->view->user_deleteForm($user, $check['warning']);                
         }
     }
 }
