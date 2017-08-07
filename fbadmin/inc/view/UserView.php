@@ -2,6 +2,8 @@
 
 namespace FreeBlog\Admin\View;
 
+use FreeBlog\Admin\Modules\User\User as User;
+
 /**
  * Description of UserView
  *
@@ -9,57 +11,24 @@ namespace FreeBlog\Admin\View;
  */
 class UserView extends View 
 {
-
-    public function usersList($users): void
-    {
-        $this->title = 'Users';
-        $this->content .= '
-      <table class="table table-bordered">
-        <tr class="row">
-          <th class="col-lg-1">id</th>
-          <th class="col-lg-1">username</th>
-          <th class="col-lg-6">email</th>
-          <th class="col-lg-2">date joined</th>
-          <th class="col-lg-2">actions</th>
-        </tr>';
     
-        foreach ($users as $user) {
-        $this->content .= '
-        <tr class="row">
-          <td><a href="index.php?page=user&id='. $user['id'] .'">'. $user['id']                               .'</a></td>
-          <td><a href="index.php?page=user&id='. $user['id'] .'">'. $user['username']                         .'</a></td>
-          <td><a href="index.php?page=user&id='. $user['id'] .'">'. $user['email']                            .'</a></td>
-          <td><a href="index.php?page=user&id='. $user['id'] .'">'. date("d/m/Y",strtotime($user['gendate'])) .'</a></td>
-          <td>
-            <a href="index.php?page=user&id='. $user['id'] .'&action=edit">  Edit  </a>&nbsp;
-            <a href="index.php?page=user&id='. $user['id'] .'&action=delete">Delete</a>
-          </td>
-        </tr>';      
-        }
-    
-        $this->content .= ' 
-      </table>
-      <a href="index.php?page=user&action=new" class="btn btn-primary">Add New User</a>';
-        $this->dashboard();
-    }
-  
-    public function user($user): void 
+    public function user(User $user)
     {
         $this->title = 'User';
         $this->content = '
       <article>
-        <h2>'.$user['username'].'</h2>
-        <div>email: '.$user['email'].'</div>
-        <div>Date Joined: '.date("d/m/Y",strtotime($user['gendate'])).'</div>
+        <h2>'.$user->getUsername().'</h2>
+        <div>email: '.$user->getEmail().'</div>
+        <div>Date Joined: '.date("d/m/Y",strtotime($user->getGenDate())).'</div>
         <div class="art-buttons">
-          <a href="index.php?page=user&id='.$user['id'].'&action=edit"    class="btn btn-warning">Edit  </a>
-          <a href="index.php?page=user&id='.$user['id'].'&action=delete"  class="btn btn-danger"> Delete</a>
+          <a href="index.php?page=user&id='.$user->id().'&action=edit"    class="btn btn-warning">Edit  </a>
+          <a href="index.php?page=user&id='.$user->id().'&action=delete"  class="btn btn-danger"> Delete</a>
         </div>
       </article>';
         $this->dashboard();
     }
   
-    public function user_newForm($warning = ""): void 
+    public function user_newForm($warning = "")
     {
         $this->title = 'New User';
         $this->content = '
@@ -136,5 +105,4 @@ class UserView extends View
       </article>';
         $this->dashboard();
     }
-  
 }

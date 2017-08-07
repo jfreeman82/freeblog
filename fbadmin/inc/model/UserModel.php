@@ -24,8 +24,13 @@ class UserModel extends Model
               );
         
         while ($row = $q->fetch_assoc()) {
-            $user = new User($row['id']);
-            $data[] = array($row['id'], $user->getUsername(),'action');
+            $uid = $row['id'];
+            $user = new User($uid);
+            $action = ' 
+            <a href="index.php?page=user&id='. $uid .'&action=edit">  Edit  </a>&nbsp;
+            <a href="index.php?page=user&id='. $uid .'&action=delete">Delete</a>';
+            $username = '<a href="index.php?page=user&id='.$uid.'">'.$user->getUsername().'</a>';
+            $data[] = array($uid, $username,$action);
         }    
         $out['title'] = 'articles';
         $out['table-class'] = 'table table-bordered';
@@ -36,4 +41,8 @@ class UserModel extends Model
         return $out;
     }
     
+    public function user(int $uid): User 
+    {
+        return new User($uid);
+    }
 }

@@ -7,10 +7,10 @@ namespace FreeBlog\Admin\View;
  */
 class View {
     
-    private $content;
-    private $css;
-    private $title;
-    private $warning;
+    protected $content;
+    protected $css;
+    protected $title;
+    protected $warning;
   
   
     public function __construct()
@@ -22,12 +22,12 @@ class View {
      * Lay-Outs
      *      
      */
-    public function bare()
+    protected function bare()
     {
         $this->page();
     }
     
-    public function dashboard() 
+    protected function dashboard() 
     {
         $this->setCss(ADMIN_URL."inc/stylesheets/css/dashboard.css");
         $tmpcontent = $this->content;

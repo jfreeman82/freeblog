@@ -10,11 +10,12 @@ class User {
   private $id;
   private $username;
   private $password;
+  private $email;
   private $gendate;
   
   public function __construct($uid) {
     $this->id = $uid;
-    $sql = "SELECT username, password, gendate "
+    $sql = "SELECT username, password, email, gendate "
             . "FROM users "
             . "WHERE id = '$uid';";
     global $dbc;
@@ -22,18 +23,48 @@ class User {
     $row = $q->fetch_assoc();
     $this->username = $row['username'];
     $this->password = $row['password'];
-    $this->gendate = $row['gendate'];
+    $this->email    = $row['email'];
+    $this->gendate  = $row['gendate'];
   }
   
-  public function getUsername() {
-    return $this->username;
-  }
-  public function getPassword() {
-    return $this->password;
-  }
-  public function getGenDate() {
-    return $this->gendate;
-  }
+    public function id(): int 
+    {
+      return $this->id;
+    }
+    public function username(): string 
+    {
+        return $this->username;
+    }
+    public function password(): string 
+    {
+        return $this->password;
+    }
+    public function email() {
+        return $this->email;
+    }
+    public function genDate(): string 
+    {
+        return $this->gendate;
+    }
+  
+    /* Obsolete getters */
+    public function getUsername(): string 
+    {
+        return $this->username();
+    }
+    public function getPassword(): string 
+    {
+        return $this->password();
+    }
+    public function getEmail(): string
+    {
+        return $this->email();
+    }
+    public function getGenDate(): string
+    {
+        return $this->genDate();
+    }
+  
   
   public function dataArray() {
     return array(
