@@ -1,4 +1,5 @@
 <?php
+namespace FreeBlog\Modules\DB;
 
 class DBC {
 
@@ -6,7 +7,7 @@ class DBC {
 
     public function __construct() {
        
-        $this->mysqli = new mysqli(MYSQL_HOST, MYSQL_USER, MYSQL_PASS, MYSQL_DB);
+        $this->mysqli = new \mysqli(MYSQL_HOST, MYSQL_USER, MYSQL_PASS, MYSQL_DB);
 
         if ($this->mysqli->connect_errno) {
             echo "Error MySQLi: (". $this->mysqli->connect_errno. ") " . $this->mysqli->connect_error;
@@ -65,4 +66,4 @@ class DBC {
     }
 }
 
-$dbc = new DBC();
+//$dbc = new DBC();

@@ -59,12 +59,12 @@ class Controller {
     
     private function login() {
         $check = $this->model->fp_login();
-        switch($check) {
-            case 0:
+        switch($check['status']) {
+            case '0':
                 $loginArr = $this->model->formArray_login();
                 $this->view->login($loginArr);
                 break;
-            case 1:
+            case '1':
                 $this->view->front();
                 break;
             default:
