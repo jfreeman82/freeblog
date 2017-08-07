@@ -1,6 +1,8 @@
 <?php
 namespace FreeBlog\Admin\View;
 
+use FreeBlog\Articles\Article as Article;
+
 /**
  * Description of ArticleView
  *
@@ -8,7 +10,7 @@ namespace FreeBlog\Admin\View;
  */
 class ArticleView extends View 
 {
-   public function articlesList($articles) {
+   public function articlesList(Array $articles) {
     $this->title = 'Articles';
     $this->content .= '
       <table class="table table-bordered">
@@ -41,16 +43,16 @@ class ArticleView extends View
   }
  
     
-  public function article($article) {
+  public function article(Article $article) {
     $this->title = 'Article';
     $this->content = '
       <article>
-        <h1>'.$article['title'].'</h1>
-        <div class="art-info">posted on '.date("M d, Y", strtotime($article['gendate'])).' by '.$article['username'].'</div>
-        <div class="art-body">'.$article['article'].'</div>
+        <h1>'.$article->getTitle().'</h1>
+        <div class="art-info">posted on '.date("M d, Y", strtotime($article->getGenDate())).' by '.$article->user()->getUsername().'</div>
+        <div class="art-body">'.$article->getArticle().'</div>
         <div class="art-buttons">
-          <a href="index.php?page=article&id='.$article['id'].'&action=edit"    class="btn btn-warning">Edit  </a>
-          <a href="index.php?page=article&id='.$article['id'].'&action=delete"  class="btn btn-danger"> Delete</a>
+          <a href="index.php?page=article&id='.$article->id().'&action=edit"    class="btn btn-warning">Edit  </a>
+          <a href="index.php?page=article&id='.$article->id().'&action=delete"  class="btn btn-danger"> Delete</a>
         </div>
       </article>';
     $this->dashboard();
@@ -83,52 +85,55 @@ class ArticleView extends View
       </div>';
     $this->dashboard();
   }
-  public function article_editForm($article,$warning = "") {
-    $this->title = 'Edit Article';
-    $this->content = '
+    public function article_editForm(Article $article, $warning = "") 
+    {
+        $this->title = 'Edit Article';
+        $this->content = '
       <div class="row">
         <div class="col-lg-8">';
-    if ($warning != "") {
-      $this->content .= '
+        if ($warning != "") {
+            $this->content .= '
         <div class="alert alert-danger">'.$warning.'</div>';
-    }
-    $this->content .= ' 
-      <form action="index.php?page=article&id='.$article['id'].'&action=edit" method="POST">
+        }
+        $this->content .= ' 
+      <form action="index.php?page=article&id='.$article->id().'&action=edit" method="POST">
         <div class="form-group">
           <label for="ae_title">Title</label>
-          <input type="text" name="ae_title" id="ae_title" class="form-control" value="'.$article['title'].'"/>
+          <input type="text" name="ae_title" id="ae_title" class="form-control" value="'.$article->title().'"/>
         </div>
         <div class="form-group">
           <label for="ae_article">Article</label>
-          <textarea name="ae_article" id="ae_article" class="form-control">'.$article['article'].'</textarea>
+          <textarea name="ae_article" id="ae_article" class="form-control">'.
+            $article->article().
+          '</textarea>
         </div>
         <input type="hidden" name="aeform" value="go" />
         <input type="submit" value="Edit" class="btn btn-primary"/>
       </form>
       </div>
       </div>';
-    $this->dashboard();
-  }
-  public function article_deleteForm($article,$warning = "") {
-    $this->title = 'Article';
-    $this->content = '';
-    if ($warning != "") {
-      $this->content .= '
-        <div class="alert alert-danger">'.$warning.'</div>';
+        $this->dashboard();
     }
-    $this->content .= ' 
+    public function article_deleteForm(Article $article,$warning = "") {
+        $this->title = 'Article';
+        $this->content = '';
+        if ($warning != "") {
+            $this->content .= '
+        <div class="alert alert-danger">'.$warning.'</div>';
+        }
+        $this->content .= ' 
       <article>
-        <h1>'.$article['title'].'</h1>
-        <div class="art-info">posted on '.date("M d, Y", strtotime($article['gendate'])).' by '.$article['username'].'</div>
-        <div class="art-body">'.$article['article'].'</div>
-        <form action="index.php?page=article&id='.$article['id'].'&action=delete" method="POST">
+        <h1>'.$article->title().'</h1>
+        <div class="art-info">posted on '.date("M d, Y", strtotime($article->genDate())).' by '.$article->user()->getUsername().'</div>
+        <div class="art-body">'.$article->article().'</div>
+        <form action="index.php?page=article&id='.$article->id().'&action=delete" method="POST">
           <input type="hidden" name="adform" value="go" />
           <div class="alert alert-danger">Are you sure you want to delete this article?</div>
           <input type="submit" value="Yes, Delete" class="btn btn-danger"/>
         </form>
       </article>';
-    $this->dashboard();
-  }
+        $this->dashboard();
+    }
   /* PAGE BLOCKS 
    * 
    *  can be reused multiple times per page
