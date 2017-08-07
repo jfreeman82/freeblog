@@ -29,11 +29,12 @@ class UserController
             if (filter_input(INPUT_GET, 'id')) {
                 // view user profile
                 $uid = filter_input(INPUT_GET, 'id');
+                $user = new User($uid);  
                 if (filter_input(INPUT_GET, 'action') == "edit") {
-                    $this->editUser($uid);
+                    $this->editUser($user);
                 }
                 elseif (filter_input(INPUT_GET, 'action') == "delete") {
-                    $this->deleteUser($uid);
+                    $this->deleteUser($user);
                 }
                 else {                
                     $this->view->user( $this->model->user($uid) );
@@ -73,9 +74,8 @@ class UserController
                 $this->view->user_newForm($check['warning']);                
         }
     }
-    private function editUser($uid)
+    private function editUser(User $user)
     {
-        $user = new User($uid);
         $check = $this->model->fp_userEdit();
         switch ($check['status']) {
             case '0':
@@ -89,19 +89,19 @@ class UserController
                 $this->view->user_editForm($user, $check['warning']);                
         }
     }
-    private function deleteUser($uid) 
+    private function deleteUser(User $user) 
     {
         $check = $this->model->fp_userDelete();
         switch ($check['status']) {
             case '0':
-                $this->view->user_deleteForm();
+                $this->view->user_deleteForm($user);
                 break;
             case '1':
                 $users = $this->model->arraytable_all_users();
                 $this->view->tableArray($users);
                 break;
             default:
-                $this->view->user_deleteForm($check['warning']);                
+                $this->view->user_deleteForm($user, $check['warning']);                
         }
     }
 }

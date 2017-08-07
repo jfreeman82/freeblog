@@ -64,7 +64,7 @@ class UserView extends View
         $this->dashboard();
     }
   
-    public function user_editForm(User $user, $warning = ""): void 
+    public function user_editForm(User $user, $warning = "") 
     {
         $this->title = 'Edit User';
         $this->content = '
@@ -99,7 +99,7 @@ class UserView extends View
       </div>';
         $this->dashboard();
     }
-    public function user_deleteForm(User $user, $warning = ""): void 
+    public function user_deleteForm(User $user, $warning = "") 
     {
         $this->title = 'Delete User';
         $this->content = '';
