@@ -1,0 +1,13 @@
+.sidebar {
+  height: 100vh; }
+  .sidebar .nav-title {
+    font-size: 15pt;
+    font-weight: bold;
+    margin: 10px auto; }
+
+.main {
+  padding: 20px 20px; }
+  .main h1.page-header {
+    margin-top: 0; }
+
+/*# sourceMappingURL=dashboard.css.map */
