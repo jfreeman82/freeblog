@@ -33,11 +33,11 @@ class Model {
             else {
                 $uid = $q->fetch_assoc()['id'];
                 $_SESSION['uid'] = $uid;
-                return 1;
+                return array('status' => '1');
             }
         }
         else {
-            return 0;
+            return array('status' => '0');
         }
     }
   
@@ -85,6 +85,5 @@ class Model {
             )
         );
     }
-    
     
 }
