@@ -25,7 +25,7 @@ class Model {
             $email = filter_input(INPUT_POST, 'lf_email');
             $password = hash('sha256',filter_input(INPUT_POST, 'lf_password'));
             $sql = "SELECT id FROM users WHERE email = '$email' AND password = '$password';";
-            global $dbc;
+            $dbc = new DBC();
             $q = $dbc->query($sql) or die("ERROR Model / fp_login - ".$dbc->error());
             if ($q->num_rows == 0) {
                 return array('warning' => 'Username / Password combination not found.');

@@ -17,7 +17,7 @@ class User {
     $sql = "SELECT username, password, gendate "
             . "FROM users "
             . "WHERE id = '$uid';";
-    global $dbc;
+    $dbc = new \FreeBlog\Modules\DB\DBC();
     $q = $dbc->query($sql) or die("ERROR: User - ".$dbc->error());
     $row = $q->fetch_assoc();
     $this->username = $row['username'];

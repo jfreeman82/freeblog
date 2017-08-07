@@ -3,6 +3,7 @@
 namespace FreeBlog\Admin\Model;
 
 use FreeBlog\Articles\Article as Article;
+use FreeBlog\Modules\DB\DBC as DBC;
 
 /**
  * Description of ArticleModel
@@ -14,7 +15,7 @@ class ArticleModel extends Model
 
     public function articles_all(): Array 
     {
-        global $dbc;
+        $dbc = new DBC();
         $sql = "SELECT id FROM articles ORDER BY gendate,title DESC;";
         $q = $dbc->query($sql) or die("ERROR Model - ".$dbc->error());
         $out = array();
@@ -26,8 +27,8 @@ class ArticleModel extends Model
   
     public function articles_arraytable(): Array 
     {
-        global $dbc;
         $sql = "SELECT id FROM articles ORDER BY gendate,title DESC;";
+        $dbc = new DBC();
         $q = $dbc->query($sql) or die("ERROR Model - ".$dbc->error());
         $data = array();
         $data[] = array(
@@ -88,7 +89,7 @@ class ArticleModel extends Model
             }
             $uid = $_SESSION['uid'];
             $sql = "INSERT INTO articles (title,article,uid,gendate) VALUES ('$title','$article','$uid',NOW());";
-            global $dbc;
+            $dbc = new DBC();
             if ($dbc->query($sql)) {
                 return array('status' => '1');
             }
@@ -111,7 +112,7 @@ class ArticleModel extends Model
       if ($title == "" || $article == "") {return array('status' => 'warning', 'warning' => 'Some fields were empty.');}
       $sql = "UPDATE articles  SET title = '$title', article = '$article'
               WHERE id = '$aid';";
-      global $dbc;
+      $dbc = new DBC();
       if ($dbc->query($sql)) {
         return array('status' => '1');
       }
@@ -129,7 +130,7 @@ class ArticleModel extends Model
       if (!filter_input(INPUT_GET, 'id')) { return array('status' => 'warning', 'warning' => 'articleID missing.'); }
       $aid = filter_input(INPUT_GET, 'id');
       $sql = "DELETE FROM articles WHERE id = '$aid';";
-      global $dbc;
+      $dbc = new DBC();
       if ($dbc->query($sql)) {
         return array('status' => '1');
       }

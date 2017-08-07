@@ -2,7 +2,7 @@
 namespace FreeBlog\Admin\Model;
 
 use FreeBlog\Admin\Modules\User\User as User;
-
+use FreeBlog\Modules\DB\DBC as DBC;
 /**
  * Description of UserModel
  *
@@ -13,7 +13,7 @@ class UserModel extends Model
     // arraytable_all_users
     public function arraytable_all_users(): Array 
     {
-        global $dbc;
+        $dbc = new DBC();;
         $sql = "SELECT id FROM users ORDER BY gendate,username DESC;";
         $q = $dbc->query($sql) or die("ERROR Model - ".$dbc->error());
         $data = array();
@@ -66,7 +66,7 @@ class UserModel extends Model
             $pwd = hash('sha256',$password1);
             $sql = "INSERT INTO users (username,password,email,gendate) 
                     VALUES ('$username','$pwd','$email',NOW());";
-            global $dbc;
+            $dbc = new DBC();
             if ($dbc->query($sql)) {
                 return array('status' => '1');
             }
@@ -98,7 +98,7 @@ class UserModel extends Model
             $sql = "UPDATE users 
                     SET username = '$username', password = '$pwd', email = '$email'
                     WHERE id = '$uid';";
-            global $dbc;
+            $dbc = new DBC();
             if ($dbc->query($sql)) {
                 return array('status' => '1');
             }
@@ -117,7 +117,7 @@ class UserModel extends Model
             if (!filter_input(INPUT_GET, 'id')) { return array('status' => 'warning', 'warning' => 'UserID missing'); }
             $uid = filter_input(INPUT_GET, 'id');
             $sql = "DELETE FROM users WHERE id = '$uid';";
-            global $dbc;
+            $dbc = new DBC();
             if ($dbc->query($sql)) {
                 return array('status' => '1');
             }

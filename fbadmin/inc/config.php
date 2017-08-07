@@ -15,7 +15,7 @@ define("MYSQL_DB","freeblog");
 define('SITE_TITLE', 'onsBudget');
 
 // Requires
-require_once 'modules/DBC.php';
+require_once '../inc/modules/DBC.php';
 
 require_once 'controller/Controller.php';
 require_once 'model/Model.php';

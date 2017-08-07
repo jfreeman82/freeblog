@@ -1,5 +1,7 @@
 <?php
+namespace FreeBlog\Model;
 
+use FreeBlog\Modules\DB\DBC as DBC;
 /**
  * Description of Model
  *
@@ -11,7 +13,7 @@ class Model {
   
   
   public function articles_lastx($x) {
-    global $dbc;
+    $dbc = new DBC();
     $sql = "SELECT id FROM articles ORDER BY gendate,title DESC LIMIT $x ;";
     $q = $dbc->query($sql) or die("ERROR Model - ".$dbc->error());
     $out = array();

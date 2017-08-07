@@ -1,5 +1,7 @@
 <?php
 namespace FreeBlog\Admin\Modules\User;
+
+use FreeBlog\Modules\DB\DBC as DBC;
 /**
  * Description of User
  *
@@ -18,7 +20,7 @@ class User {
     $sql = "SELECT username, password, email, gendate "
             . "FROM users "
             . "WHERE id = '$uid';";
-    global $dbc;
+    $dbc = new DBC();
     $q = $dbc->query($sql) or die("ERROR: User - ".$dbc->error());
     $row = $q->fetch_assoc();
     $this->username = $row['username'];
