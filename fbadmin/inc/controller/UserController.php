@@ -4,6 +4,8 @@ namespace FreeBlog\Admin\Controller;
 use FreeBlog\Admin\Model\UserModel as UserModel;
 use FreeBlog\Admin\View\UserView as UserView;
 
+use FreeBlog\Admin\Modules\User\User as User;
+
 /**
  * Description of UserController
  *
@@ -28,10 +30,10 @@ class UserController
                 // view user profile
                 $uid = filter_input(INPUT_GET, 'id');
                 if (filter_input(INPUT_GET, 'action') == "edit") {
-                    $this->editUser();
+                    $this->editUser($uid);
                 }
                 elseif (filter_input(INPUT_GET, 'action') == "delete") {
-                    $this->deleteUser();
+                    $this->deleteUser($uid);
                 }
                 else {                
                     $this->view->user( $this->model->user($uid) );
@@ -71,22 +73,23 @@ class UserController
                 $this->view->user_newForm($check['warning']);                
         }
     }
-    private function editUser()
+    private function editUser($uid)
     {
+        $user = new User($uid);
         $check = $this->model->fp_userEdit();
         switch ($check['status']) {
             case '0':
-                $this->view->user_editForm();
+                $this->view->user_editForm($user);
                 break;
             case '1':
                 $users = $this->model->arraytable_all_users();
                 $this->view->tableArray($users);
                 break;
             default:
-                $this->view->user_editForm($check['warning']);                
+                $this->view->user_editForm($user, $check['warning']);                
         }
     }
-    private function deleteUser() 
+    private function deleteUser($uid) 
     {
         $check = $this->model->fp_userDelete();
         switch ($check['status']) {

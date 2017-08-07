@@ -46,11 +46,11 @@ class UserView extends View
         </div>
         <div class="form-group">
           <label for="un_password1">Password</label>
-          <input type="text" name="un_password1" id="un_password1" class="form-control" placeholder="Password" required />
+          <input type="password" name="un_password1" id="un_password1" class="form-control" placeholder="Password" required />
         </div>
         <div class="form-group">
           <label for="un_password2">Password Again</label>
-          <input type="text" name="un_password2" id="un_password2" class="form-control" placeholder="Password" required />
+          <input type="password" name="un_password2" id="un_password2" class="form-control" placeholder="Password" required />
         </div>
         <div class="form-group">
           <label for="un_email">Email</label>
@@ -82,15 +82,15 @@ class UserView extends View
         </div>
         <div class="form-group">
           <label for="ue_password1">Password</label>
-          <input type="text" name="ue_password1" id="ue_password1" class="form-control" value="'.$user->password().'"/>
+          <input type="password" name="ue_password1" id="ue_password1" class="form-control" value="'.$user->password().'"/>
         </div>
         <div class="form-group">
           <label for="ue_password2">Password again</label>
-          <input type="text" name="ue_password2" id="ue_password2" class="form-control" value="'.$user->password().'"/>
+          <input type="password" name="ue_password2" id="ue_password2" class="form-control" value="'.$user->password().'"/>
         </div>
         <div class="form-group">
           <label for="ue_email">Email</label>
-          <input type="email" name="ue_email" id="ue_email" class="form-control">'.$user->email().'/>
+          <input type="email" name="ue_email" id="ue_email" class="form-control" value="'.$user->email().'" />
         </div>
         <input type="hidden" name="ueform" value="go" />
         <input type="submit" value="Edit User" class="btn btn-primary"/>
