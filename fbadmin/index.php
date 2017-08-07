@@ -1,4 +1,8 @@
 <?php
+namespace FreeBlog\Admin;
+
+use FreeBlog\Admin\Controller\Controller as Controller;
+
 session_start();
 /* FreeBlog - a free light-weight blog platform */
 

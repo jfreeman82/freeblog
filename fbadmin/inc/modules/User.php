@@ -1,5 +1,5 @@
 <?php
-
+namespace FreeBlog\Admin\Modules\User;
 /**
  * Description of User
  *

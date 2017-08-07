@@ -1,5 +1,7 @@
 <?php
+namespace FreeBlog\Articles;
 
+use FreeBlog\Admin\Modules\User\User as User;
 /**
  * Description of Article
  *
