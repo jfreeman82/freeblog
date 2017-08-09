@@ -10,150 +10,22 @@ use freest\blog\modules;
  */
 class View 
 {
-    private $content;
-    private $css;
-    private $title;
+    protected $content;
+    protected $css;
+    protected $title;
   
 
     public function __construct() {}
   
-    /*
-     * Lay-Outs
-     */
-  
-  
-    /* Front
-     * 
-     * Front layout
-     */
-    public function front($arts) 
-    {
-        $this->setCss('blog.css');
-        $this->content = $this->nav().'
-
-    <div class="container">
-
-      <div class="blog-header">
-        <h1 class="blog-title">'. modules\fbvar('SITE_TITLE').'</h1>
-        <p class="lead blog-description">'. modules\fbvar('SITE_SUBTITLE').'</p>
-      </div>
-
-      <div class="row">
-
-        <div class="col-sm-8 blog-main">';
-        foreach ($arts as $art) {
-            $this->content .= $this->articleBlock($art);
-        }
-        $this->content .= ' 
-          <nav>
-            <ul class="pager">
-              <li><a href="#">Previous</a></li>
-              <li><a href="#">Next</a></li>
-            </ul>
-          </nav>
-
-        </div><!-- /.blog-main -->
-
-        '.$this->sidebar().' 
-
-      </div><!-- /.row -->
-
-    </div><!-- /.container -->
     
-    '.$this->footer();
-    
-        $this->page();
-    }
-  
-    /*
-     * Article Layout
-     */
-    public function article($art) 
-    {
-        $this->setCss('blog.css');
-        $this->content = $this->nav().'
-
-    <div class="container">
-
-      <div class="blog-header">
-        <h1 class="blog-title">'. fbvar('SITE_TITLE').'</h1>
-        <p class="lead blog-description">'. fbvar('SITE_SUBTITLE').'</p>
-      </div>
-
-      <div class="row">
-
-        <div class="col-sm-8 blog-main">';
-        foreach ($arts as $art) {
-            $this->content .= $this->articleBlock($art);
-        }
-        $this->content .= ' 
-          <nav>
-            <ul class="pager">
-              <li><a href="#">Previous</a></li>
-              <li><a href="#">Next</a></li>
-            </ul>
-          </nav>
-
-        </div><!-- /.blog-main -->
-
-        '.$this->sidebar().' 
-
-      </div><!-- /.row -->
-
-    </div><!-- /.container -->
-    '.$this->footer();
-        $this->page();
-  
-    }
-    /*
-     * Articles Layout
-     * 
-     * Like Front but without sidebar, see how that looks
-     */
-    public function articles($arts) {
-        $this->setCss('blog.css');
-        $this->content = $this->nav().' 
-
-    <div class="container">
-
-      <div class="blog-header">
-        <h1 class="blog-title">'. modules\fbvar('SITE_TITLE').'</h1>
-        <p class="lead blog-description">'. modules\fbvar('SITE_SUBTITLE').'</p>
-      </div>
-
-      <div class="row">
-
-        <div class="col-sm-8 blog-main">';
-        foreach ($arts as $art) {
-            $this->content .= $this->articleBlock($art);
-        }
-        $this->content .= ' 
-          <nav>
-            <ul class="pager">
-              <li><a href="#">Previous</a></li>
-              <li><a href="#">Next</a></li>
-            </ul>
-          </nav>
-
-        </div><!-- /.blog-main -->
-        '.$this->sidebar().' 
-      </div><!-- /.row -->
-
-    </div><!-- /.container -->
-
-    '.$this->footer();
-        
-        $this->page();
-    }  
-  
-    public function warning($msg) 
+    public function warning($msg)  // a 404 type page
     {
         $this->content = '
       <div class="warning">'.$msg.'</div>';
         $this->page();
     }
   
-    private function page() 
+    protected function page() 
     {
         echo  '<!DOCTYPE html>
 <html lang="en">
@@ -163,7 +35,7 @@ class View
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>'.$this->title.'</title>
     '.$this->css.' 
-    <link href="inc/modules/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="stylesheets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -171,29 +43,15 @@ class View
   </head>
   <body>
     '.$this->content.'
-    <script src="inc/modules/jquery/jquery-3.2.1.min.js"></script>
-    <script src="inc/modules/bootstrap/js/bootstrap.min.js"></script>
+    <script src="stylesheets/jquery/jquery-3.2.1.min.js"></script>
+    <script src="stylesheets/bootstrap/js/bootstrap.min.js"></script>
   </body>
 </html>';
     }
   
-  /* PAGE BLOCKS 
-   * 
-   *  can be reused multiple times per page
-   */
-  
-    // ArticleBlock puts everything in an article and returns it
-    private function articleBlock($art) {
-        return '
-          <article class="blog-post">
-            <h2 class="blog-post-title">'.$art['title'].'</h2>
-            <p class="blog-post-meta">'.date("F j, Y, g:i a",strtotime($art['gendate'])).' by <a href="#">'.$art['username'].'</a></p>
-            <p class="blog-post-body">'.$art['article'].'</p>
-          </article>';
-    }
-  
     // FOOTER
-    private function footer() {
+    protected function footer() 
+    {
         return ' 
     <footer class="blog-footer">
       <p>Blog template built for <a href="http://getbootstrap.com">Bootstrap</a> by <a href="https://twitter.com/mdo">@mdo</a>.</p>
@@ -202,8 +60,10 @@ class View
       </p>
     </footer>';
     }
+    
     // NAV
-    private function nav() {
+    protected function nav() 
+    {
         return ' 
     <div class="blog-masthead">
       <div class="container">
@@ -217,8 +77,10 @@ class View
       </div>
     </div>';
     }
+    
     // SIDEBAR
-    private function sidebar() {
+    protected function sidebar() 
+    {
         return '
         <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
           <div class="sidebar-module sidebar-module-inset">

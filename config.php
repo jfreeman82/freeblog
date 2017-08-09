@@ -19,12 +19,14 @@ require_once 'src/modules/DBC.php';
 
 require_once 'src/mvc/controller/Controller.php';
 require_once 'src/mvc/controller/ArticleController.php';
+require_once 'src/mvc/controller/FrontController.php';
 
 require_once 'src/mvc/model/Model.php';
 require_once 'src/mvc/model/ArticleModel.php';
 
 require_once 'src/mvc/view/View.php';
 require_once 'src/mvc/view/ArticleView.php';
+require_once 'src/mvc/view/FrontView.php';
 
 require_once 'src/modules/articles/Article.php';
 require_once 'src/modules/User.php';

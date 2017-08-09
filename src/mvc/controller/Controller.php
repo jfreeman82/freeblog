@@ -14,28 +14,31 @@ class Controller
     private $model;
     private $view;
     
-    private $router;
+    protected $router;
    
     public function __construct() 
     {
         $this->model = new Model();
         $this->view = new View();
         
-        $this->router = new Router();
-        $this->router->route('',          '0');
-        $this->router->route('index.php', '0');
-        $this->router->route('articles',  '1');
-        $this->router->route('admin',     '2');
+        $router = new Router();
+        $router->route('',          '0');
+        $router->route('index.php', '0');
+        $router->route('articles',  '1');
+        $router->route('fbadmin',     '2');
+        $this->router = $router;
     }
 
     public function invoke() 
     {
         switch ($this->router->get()) {
             case '0':
+                //echo 'home';
                 //echo 0;
                 //echo $this->router->get();
-                $arts = $this->model->articles_lastx(5);
-                $this->view->front($arts);
+                $fc = new FrontController();
+                $fc->setRouter($this->router);
+                $fc->invoke();
                 break;
             case '1':
                 //echo 1;
@@ -50,38 +53,19 @@ class Controller
                     $this->view->articles($art_data);
                 }
                  */
+                echo 'articles';
                 $ac = new ArticleController();
                 $ac->setRouter($this->router);
                 $ac->invoke();
+            case '2':
+                echo 'admin';
             default:
                 //echo $this->router->get();
                 //echo 'prrr';
         }
         
-        /*
-        if (filter_input(INPUT_GET, 'page')) {
-            $page = filter_input(INPUT_GET, 'page');
-            switch ($page) {
-                case "articles":
-                    if (filter_input(INPUT_GET, 'id')) {
-                        $aid = filter_input(INPUT_GET, 'id');
-                        $art_data = $this->model->article($aid);
-                        $this->view->article($art_data);
-                    }
-                    else {
-                        $art_data = $this->model->articles_all();
-                        $this->view->articles($art_data);
-                    }
-                break;
-                default: 
-                    $arts = $this->model->articles_lastx(5);
-                    $this->view->articles($arts);
-            }
-        }
-        else {
-            $arts = $this->model->articles_lastx(5);
-            $this->view->front($arts);
-        }
-        */
+    }
+    protected function setRouter(Router $router) {
+        $this->router = $router;
     }
 }
