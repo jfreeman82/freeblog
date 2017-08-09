@@ -32,10 +32,13 @@ class Controller
     {
         switch ($this->router->get()) {
             case '0':
+                //echo 0;
+                //echo $this->router->get();
                 $arts = $this->model->articles_lastx(5);
                 $this->view->front($arts);
                 break;
             case '1':
+                //echo 1;
                 /*
                 if ($this->router->second()) {
                     $aid = $this->router->second();
@@ -50,6 +53,9 @@ class Controller
                 $ac = new ArticleController();
                 $ac->setRouter($this->router);
                 $ac->invoke();
+            default:
+                //echo $this->router->get();
+                //echo 'prrr';
         }
         
         /*

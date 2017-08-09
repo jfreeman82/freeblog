@@ -5,7 +5,7 @@ use freest\blog\mvc\controller\Controller as Controller;
 
 /* FreeBlog - a free light-weight blog platform */
 
-require 'inc/config.php';
+require '../config.php';
 
 // Start controller
 $controller = new Controller();

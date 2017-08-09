@@ -1,21 +1,6 @@
 <?php
 
-ini_set('error_reporting', E_ALL & ~E_DEPRECATED);
-ini_set('display_errors', 'STDOUT');
-
-define('BASE_URL', 'http://localhost/blog/');
-define('ADMIN_URL', 'http://localhost/blog/fbadmin/');
-
-define("MYSQL_HOST","localhost");
-define("MYSQL_USER","freebloguser");
-define("MYSQL_PASS","freebloguser12345");
-define("MYSQL_DB","freeblog");
-
-
-define('SITE_TITLE', 'onsBudget');
-
-// Requires
-require_once '../inc/modules/DBC.php';
+require 'config.php';
 
 require_once 'controller/Controller.php';
 require_once 'model/Model.php';
