@@ -117,8 +117,8 @@ class View
     <div class="container">
 
       <div class="blog-header">
-        <h1 class="blog-title">'. fbvar('SITE_TITLE').'</h1>
-        <p class="lead blog-description">'. fbvar('SITE_SUBTITLE').'</p>
+        <h1 class="blog-title">'. modules\fbvar('SITE_TITLE').'</h1>
+        <p class="lead blog-description">'. modules\fbvar('SITE_SUBTITLE').'</p>
       </div>
 
       <div class="row">

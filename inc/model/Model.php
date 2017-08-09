@@ -2,8 +2,7 @@
 namespace freest\blog\mvc\model;
 
 use freest\modules\DB\DBC as DBC;
-use freest\blog\modules\Article as Article;
-
+use freest\blog\modules\Article;
 /**
  * Description of Model
  *
@@ -12,7 +11,7 @@ use freest\blog\modules\Article as Article;
 class Model 
 {
     public function __construct() {}
-    
+
     public function articles_lastx($x) 
     {
         $dbc = new DBC();
@@ -24,11 +23,5 @@ class Model
             array_push($out, $article->dataArray());
         }    
         return $out;
-    }
-  
-    public function article($aid): Array 
-    {
-        $article = new Article($aid);
-        return $article->dataArray();
-    }
+    }    
 }
