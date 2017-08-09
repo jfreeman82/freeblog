@@ -1,33 +1,34 @@
 <?php
-namespace FreeBlog\Model;
+namespace freest\blog\mvc\model;
 
-use FreeBlog\Modules\DB\DBC as DBC;
+use freest\modules\DB\DBC as DBC;
+use freest\blog\modules\Article as Article;
+
 /**
  * Description of Model
  *
  * @author myrmidex
  */
-class Model {
-
-  public function __construct() {}
+class Model 
+{
+    public function __construct() {}
+    
+    public function articles_lastx($x) 
+    {
+        $dbc = new DBC();
+        $sql = "SELECT id FROM articles ORDER BY gendate,title DESC LIMIT $x ;";
+        $q = $dbc->query($sql) or die("ERROR Model - ".$dbc->error());
+        $out = array();
+        while ($row = $q->fetch_assoc()) {
+            $article = new Article($row['id']);
+            array_push($out, $article->dataArray());
+        }    
+        return $out;
+    }
   
-  
-  public function articles_lastx($x) {
-    $dbc = new DBC();
-    $sql = "SELECT id FROM articles ORDER BY gendate,title DESC LIMIT $x ;";
-    $q = $dbc->query($sql) or die("ERROR Model - ".$dbc->error());
-    $out = array();
-    while ($row = $q->fetch_assoc()) {
-      $article = new Article($row['id']);
-      //var_dump($article->dataArray());
-      array_push($out, $article->dataArray());
-    }    
-    return $out;
-  }
-  
-  public function article($aid) {
-    $article = new Article($aid);
-    return $article->dataArray();
-  }
-  
+    public function article($aid): Array 
+    {
+        $article = new Article($aid);
+        return $article->dataArray();
+    }
 }

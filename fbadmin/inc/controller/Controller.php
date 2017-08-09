@@ -1,11 +1,13 @@
 <?php
-namespace FreeBlog\Admin\Controller;
+namespace freest\blog\admin\mvc\controller;
 
-use FreeBlog\Admin\Model\Model as Model;
-use FreeBlog\Admin\View\View as View;
+use freest\blog\admin\mvc\model\Model as Model;
+use freest\blog\admin\mvc\view\View as View;
 
-use FreeBlog\Admin\Controller\UserController as UserController;
+use freest\blog\admin\mvc\controller\ArticleController as ArticleController;
+use freest\blog\admin\mvc\controller\UserController as UserController;
 
+use freest\blog\admin\modules\auth;
 /* 
  * Controller.php
  */
@@ -25,10 +27,10 @@ class Controller {
     public function invoke() 
     {
         if (filter_input(INPUT_GET,'action') == "logout") { 
-            logout();
+            auth\logout();
         }
     
-        if (isLoggedIn()) {
+        if (auth\isLoggedIn()) {
     
             if (filter_input(INPUT_GET,'page')) {
                 $page = filter_input(INPUT_GET, 'page');
@@ -48,7 +50,8 @@ class Controller {
                 }
             }
             else {
-                $arts = $this->model->articles_all();
+                $artmodel = new \freest\blog\admin\mvc\model\ArticleModel();
+                $arts = $artmodel->articles_all();
                 $this->view->front($arts);
             }
         }

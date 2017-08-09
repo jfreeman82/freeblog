@@ -1,10 +1,10 @@
 <?php
-namespace FreeBlog\Admin\Controller;
+namespace freest\blog\admin\mvc\controller;
 
-use FreeBlog\Admin\Model\ArticleModel as ArticleModel;
-use FreeBlog\Admin\View\ArticleView as ArticleView;
+use freest\blog\admin\mvc\model\ArticleModel as ArticleModel;
+use freest\blog\admin\mvc\view\ArticleView as ArticleView;
 
-use FreeBlog\Articles\Article as Article;
+use freest\blog\admin\modules\articles\Article as Article;
 
 /**
  * Description of ArticleController

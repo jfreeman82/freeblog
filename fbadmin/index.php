@@ -1,7 +1,7 @@
 <?php
-namespace FreeBlog\Admin;
+namespace freest\blog\admin;
 
-use FreeBlog\Admin\Controller\Controller as Controller;
+use freest\blog\admin\mvc\controller\Controller as Controller;
 
 session_start();
 /* FreeBlog - a free light-weight blog platform */

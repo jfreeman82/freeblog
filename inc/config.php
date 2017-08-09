@@ -3,7 +3,7 @@
 ini_set('error_reporting', E_ALL & ~E_DEPRECATED);
 ini_set('display_errors', 'STDOUT');
 
-define('BASE_URL', 'http://localhost/freeblog/');
+define('BASE_URL', 'http://localhost/blog/');
 
 define("MYSQL_HOST","localhost");
 define("MYSQL_USER","freebloguser");

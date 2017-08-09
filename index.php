@@ -1,4 +1,7 @@
 <?php
+namespace freest\blog;
+
+use freest\blog\mvc\controller\Controller as Controller;
 
 /* FreeBlog - a free light-weight blog platform */
 

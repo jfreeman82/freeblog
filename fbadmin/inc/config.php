@@ -3,8 +3,8 @@
 ini_set('error_reporting', E_ALL & ~E_DEPRECATED);
 ini_set('display_errors', 'STDOUT');
 
-define('BASE_URL', 'http://localhost/freeblog/');
-define('ADMIN_URL', 'http://localhost/freeblog/fbadmin/');
+define('BASE_URL', 'http://localhost/blog/');
+define('ADMIN_URL', 'http://localhost/blog/fbadmin/');
 
 define("MYSQL_HOST","localhost");
 define("MYSQL_USER","freebloguser");
@@ -32,5 +32,5 @@ require_once 'controller/UserController.php';
 require_once 'model/UserModel.php';
 require_once 'view/UserView.php';
 
-require_once 'modules/fbvars.php';
+require_once '../inc/modules/fbvars.php';
 require_once 'modules/auth.php';

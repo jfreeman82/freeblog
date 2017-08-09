@@ -1,9 +1,9 @@
 <?php
 
-namespace FreeBlog\Admin\Model;
+namespace freest\blog\admin\mvc\model;
 
-use FreeBlog\Articles\Article as Article;
-use FreeBlog\Modules\DB\DBC as DBC;
+use freest\blog\admin\modules\articles\Article as Article;
+use freest\modules\DB\DBC as DBC;
 
 /**
  * Description of ArticleModel

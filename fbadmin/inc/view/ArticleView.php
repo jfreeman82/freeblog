@@ -1,7 +1,7 @@
 <?php
-namespace FreeBlog\Admin\View;
+namespace freest\blog\admin\mvc\view;
 
-use FreeBlog\Articles\Article as Article;
+use freest\blog\modules\articles\Article as Article;
 
 /**
  * Description of ArticleView
