@@ -1,4 +1,8 @@
 <?php
+namespace freest\blog\modules;
+
+use freest\modules\DB\DBC as DBC;
+use freest\blog\modules\User as User;
 
 /**
  * Description of Article
@@ -17,7 +21,7 @@ class Article {
     $sql = "SELECT title,article,gendate,uid 
             FROM articles 
             WHERE id = '$id';";
-    $dbc = new \FreeBlog\Modules\DB\DBC();
+    $dbc = new DBC();
     $q = $dbc->query($sql) or die("ERROR Article - ".$dbc->error());
     if ($q->num_rows == 0) { die("Article does not exist.");}
     $row = $q->fetch_assoc();

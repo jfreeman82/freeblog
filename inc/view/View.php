@@ -1,46 +1,50 @@
 <?php
+namespace freest\blog\mvc\view;
+
+use freest\blog\modules;
 
 /**
  * Description of View
  *
  * @author myrmidex
  */
-class View {
-
-  private $content;
-  private $css;
-  private $title;
+class View 
+{
+    private $content;
+    private $css;
+    private $title;
   
 
-  public function __construct() {}
+    public function __construct() {}
   
-  /*
-   * Lay-Outs
-   */
+    /*
+     * Lay-Outs
+     */
   
   
-  /* Front
-   * 
-   * Front layout
-  */
-  public function front($arts) {
-    $this->setCss('blog.css');
-    $this->content = $this->nav().'
+    /* Front
+     * 
+     * Front layout
+     */
+    public function front($arts) 
+    {
+        $this->setCss('blog.css');
+        $this->content = $this->nav().'
 
     <div class="container">
 
       <div class="blog-header">
-        <h1 class="blog-title">'. fbvar('SITE_TITLE').'</h1>
-        <p class="lead blog-description">'. fbvar('SITE_SUBTITLE').'</p>
+        <h1 class="blog-title">'. modules\fbvar('SITE_TITLE').'</h1>
+        <p class="lead blog-description">'. modules\fbvar('SITE_SUBTITLE').'</p>
       </div>
 
       <div class="row">
 
         <div class="col-sm-8 blog-main">';
-    foreach ($arts as $art) {
-      $this->content .= $this->articleBlock($art);
-    }
-    $this->content .= ' 
+        foreach ($arts as $art) {
+            $this->content .= $this->articleBlock($art);
+        }
+        $this->content .= ' 
           <nav>
             <ul class="pager">
               <li><a href="#">Previous</a></li>
@@ -58,16 +62,16 @@ class View {
     
     '.$this->footer();
     
-    $this->page();
-  }
+        $this->page();
+    }
   
-  /*
-   * Article Layout
-   */
-  public function article($art) {
-    $tmpcontent = $this->content;
-    $this->setCss('blog.css');
-    $this->content = $this->nav().'
+    /*
+     * Article Layout
+     */
+    public function article($art) 
+    {
+        $this->setCss('blog.css');
+        $this->content = $this->nav().'
 
     <div class="container">
 
@@ -79,10 +83,10 @@ class View {
       <div class="row">
 
         <div class="col-sm-8 blog-main">';
-    foreach ($arts as $art) {
-      $this->content .= $this->articleBlock($art);
-    }
-    $this->content .= ' 
+        foreach ($arts as $art) {
+            $this->content .= $this->articleBlock($art);
+        }
+        $this->content .= ' 
           <nav>
             <ul class="pager">
               <li><a href="#">Previous</a></li>
@@ -98,33 +102,32 @@ class View {
 
     </div><!-- /.container -->
     '.$this->footer();
-    $this->page();
+        $this->page();
   
-  }
-  /*
-   * Articles Layout
-   * 
-   * Like Front but without sidebar, see how that looks
-   */
-  public function articles($arts) {
-    $tmpcontent = $this->content;
-    $this->setCss('blog.css');
-    $this->content = $this->nav().' 
+    }
+    /*
+     * Articles Layout
+     * 
+     * Like Front but without sidebar, see how that looks
+     */
+    public function articles($arts) {
+        $this->setCss('blog.css');
+        $this->content = $this->nav().' 
 
     <div class="container">
 
       <div class="blog-header">
-        <h1 class="blog-title">'. fbvar('SITE_TITLE').'</h1>
-        <p class="lead blog-description">'. fbvar('SITE_SUBTITLE').'</p>
+        <h1 class="blog-title">'. modules\fbvar('SITE_TITLE').'</h1>
+        <p class="lead blog-description">'. modules\fbvar('SITE_SUBTITLE').'</p>
       </div>
 
       <div class="row">
 
         <div class="col-sm-8 blog-main">';
-    foreach ($arts as $art) {
-      $this->content .= $this->articleBlock($art);
-    }
-    $this->content .= ' 
+        foreach ($arts as $art) {
+            $this->content .= $this->articleBlock($art);
+        }
+        $this->content .= ' 
           <nav>
             <ul class="pager">
               <li><a href="#">Previous</a></li>
@@ -139,20 +142,20 @@ class View {
     </div><!-- /.container -->
 
     '.$this->footer();
-    $this->page();
+        
+        $this->page();
+    }  
   
-  }
-  
-  
-  
-  public function warning($msg) {
-    $this->content = '
+    public function warning($msg) 
+    {
+        $this->content = '
       <div class="warning">'.$msg.'</div>';
-    $this->page();
-  }
+        $this->page();
+    }
   
-  private function page() {
-    echo  '<!DOCTYPE html>
+    private function page() 
+    {
+        echo  '<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -172,37 +175,36 @@ class View {
     <script src="inc/modules/bootstrap/js/bootstrap.min.js"></script>
   </body>
 </html>';
-  }
+    }
   
   /* PAGE BLOCKS 
    * 
    *  can be reused multiple times per page
    */
   
-  // ArticleBlock puts everything in an article and returns it
-  private function articleBlock($art) {
-    return '
+    // ArticleBlock puts everything in an article and returns it
+    private function articleBlock($art) {
+        return '
           <article class="blog-post">
             <h2 class="blog-post-title">'.$art['title'].'</h2>
             <p class="blog-post-meta">'.date("F j, Y, g:i a",strtotime($art['gendate'])).' by <a href="#">'.$art['username'].'</a></p>
             <p class="blog-post-body">'.$art['article'].'</p>
-          </article>
-';
-  }
+          </article>';
+    }
   
-  // FOOTER
-  private function footer() {
-    return ' 
+    // FOOTER
+    private function footer() {
+        return ' 
     <footer class="blog-footer">
       <p>Blog template built for <a href="http://getbootstrap.com">Bootstrap</a> by <a href="https://twitter.com/mdo">@mdo</a>.</p>
       <p>
         <a href="#">Back to top</a>
       </p>
     </footer>';
-  }
-  // NAV
-  private function nav() {
-    return ' 
+    }
+    // NAV
+    private function nav() {
+        return ' 
     <div class="blog-masthead">
       <div class="container">
         <nav class="blog-nav">
@@ -214,14 +216,14 @@ class View {
         </nav>
       </div>
     </div>';
-  }
-  // SIDEBAR
-  private function sidebar() {
-    return '
+    }
+    // SIDEBAR
+    private function sidebar() {
+        return '
         <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
           <div class="sidebar-module sidebar-module-inset">
             <h4>About</h4>
-            <p>'. fbvar('SITE_ABOUT').'</p>
+            <p>'. modules\fbvar('SITE_ABOUT').'</p>
           </div>
           <div class="sidebar-module">
             <h4>Archives</h4>
@@ -247,14 +249,15 @@ class View {
             </ol>
           </div>
         </div><!-- /.blog-sidebar -->';
-  }
+    }
   
   
-  /* 
-   * SETTERS
-   */
-  public function setCss($css) {
-    $this->css = '<link rel="stylesheet" href="'.$css.'"/>';
-  }
+    /* 
+     * SETTERS
+     */
+    public function setCss($css) 
+    {
+        $this->css = '<link rel="stylesheet" href="'.$css.'"/>';
+    }
   
 }

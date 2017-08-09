@@ -1,10 +1,10 @@
 <?php
-namespace FreeBlog\Admin\Controller;
+namespace freest\blog\admin\mvc\controller;
 
-use FreeBlog\Admin\Model\UserModel as UserModel;
-use FreeBlog\Admin\View\UserView as UserView;
+use freest\blog\admin\mvc\model\UserModel as UserModel;
+use freest\blog\admin\mvc\view\UserView as UserView;
 
-use FreeBlog\Admin\Modules\User\User as User;
+use freest\blog\admin\modules\User as User;
 
 /**
  * Description of UserController
@@ -63,7 +63,7 @@ class UserController
         $check = $this->model->fp_userNew();
         switch ($check['status']) {
             case '0':
-                echo 'status: '.$check['status'];
+                //echo 'status: '.$check['status'];
                 $this->view->user_newForm();
                 break;
             case '1':

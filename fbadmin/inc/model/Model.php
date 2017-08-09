@@ -1,8 +1,8 @@
 <?php
-namespace FreeBlog\Admin\Model;
+namespace freest\blog\admin\mvc\model;
 
-use FreeBlog\Articles\Article as Article;
-use FreeBlog\Admin\Modules\User\User as User;
+use freest\modules\DB\DBC;
+
 /**
  * Description of Model
  *

@@ -1,8 +1,9 @@
 <?php
-namespace FreeBlog\Admin\Model;
+namespace freest\blog\admin\mvc\model;
 
-use FreeBlog\Admin\Modules\User\User as User;
-use FreeBlog\Modules\DB\DBC as DBC;
+use freest\blog\admin\modules\User as User;
+use freest\modules\DB\DBC as DBC;
+
 /**
  * Description of UserModel
  *

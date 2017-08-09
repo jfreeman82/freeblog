@@ -1,5 +1,9 @@
 <?php
-namespace FreeBlog\Admin\View;
+namespace freest\blog\admin\mvc\view;
+
+use freest\blog\modules;
+use freest\blog\admin\modules\arrays;
+
 /**
  * Description of View
  *
@@ -36,7 +40,7 @@ class View {
     <div class="container-fluid">
       <div class="row">
         <div class="col-lg-2 col-md-3 col-sm-3 col-xs-4 sidebar">
-          <div class="nav-title">'.fbvar('ADMIN_TITLE').'</div>
+          <div class="nav-title">'.modules\fbvar('ADMIN_TITLE').'</div>
         
           <ul class="nav nav-sidebar">
             <li><a href="index.php?page=articles">Articles</a></li>
@@ -94,7 +98,7 @@ class View {
         <div class="row">
             <div class="col-lg-4 col-lg-offset-4">';
           
-        $this->content .= \FreeBlog\Admin\Modules\Arrays\array2form($formArray);
+        $this->content .= arrays\array2form($formArray);
         
         $this->content .= '
             </div>
@@ -122,7 +126,7 @@ class View {
         require_once 'inc/modules/arraytable.php';
         $this->title = $array['title'];
         $this->base = 'dashboard';
-        $this->content .= array2table($array);
+        $this->content .= arrays\array2table($array);
     
         if (isset($array['footer'])) {$this->content .= $array['footer'];}
         $this->dashboard();

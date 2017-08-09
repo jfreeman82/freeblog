@@ -1,4 +1,7 @@
 <?php
+namespace freest\blog\modules;
+
+use freest\modules\DB\DBC as DBC;
 
 /**
  * Description of User
@@ -17,7 +20,7 @@ class User {
     $sql = "SELECT username, password, gendate "
             . "FROM users "
             . "WHERE id = '$uid';";
-    $dbc = new \FreeBlog\Modules\DB\DBC();
+    $dbc = new DBC();
     $q = $dbc->query($sql) or die("ERROR: User - ".$dbc->error());
     $row = $q->fetch_assoc();
     $this->username = $row['username'];

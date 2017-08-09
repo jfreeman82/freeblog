@@ -1,12 +1,12 @@
 <?php
-namespace FreeBlog\Modules\DB;
+namespace freest\modules\DB;
 
 class DBC {
 
     public $mysqli = null;
 
-    public function __construct() {
-       
+    public function __construct() 
+    {   
         $this->mysqli = new \mysqli(MYSQL_HOST, MYSQL_USER, MYSQL_PASS, MYSQL_DB);
 
         if ($this->mysqli->connect_errno) {
@@ -16,34 +16,41 @@ class DBC {
         $this->mysqli->set_charset("utf8"); 
     }
 
-    public function __destruct() {
+    public function __destruct() 
+    {
         $this->CloseDB();
     }
 
-    public function query($qry) {
+    public function query($qry) 
+    {
         $result = $this->mysqli->query($qry);
         return $result;
     }
 
-    public function runMultipleQueries($qry) {
+    public function runMultipleQueries($qry) 
+    {
         $result = $this->mysqli->multi_query($qry);
         return $result;
     }
 
-    public function CloseDB() {
+    public function CloseDB() 
+    {
         $this->mysqli->close();
     }
 
-    public function clearText($text) {
+    public function clearText($text) 
+    {
         $text = trim($text);
         return $this->mysqli->real_escape_string($text);
     }
 
-    public function lastInsertID() {
+    public function lastInsertID() 
+    {
         return $this->mysqli->insert_id;
     }
 
-    public function totalCount($fieldname, $tablename, $where = "") {
+    public function totalCount($fieldname, $tablename, $where = "") 
+    {
         $q = "SELECT count(".$fieldname.") FROM " 
     .   $tablename . " " . $where;
         
@@ -57,11 +64,13 @@ class DBC {
         return $count;
     }
 
-    public function error() {
+    public function error() 
+    {
         return $this->mysqli->error;
     }
     
-    public function getCon() {
+    public function getCon() 
+    {
       return $this->mysqli;
     }
 }

@@ -1,4 +1,5 @@
 <?php
+namespace freest\blog\admin\modules\arrays;
 
 /*
  * array( 'table-class' => 'table table-bordered',
@@ -6,7 +7,8 @@
  * 
  */
 
-function array2table(Array $array) {
+function array2table(Array $array): string
+{
   //var_dump($array);
   $items = $array["data"];
   $firstrow = array_shift($items);

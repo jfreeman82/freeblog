@@ -1,8 +1,7 @@
 <?php
+namespace freest\blog\admin\mvc\view;
 
-namespace FreeBlog\Admin\View;
-
-use FreeBlog\Admin\Modules\User\User as User;
+use freest\blog\admin\modules\User as User;
 
 /**
  * Description of UserView

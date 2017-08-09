@@ -1,6 +1,5 @@
 <?php
-namespace FreeBlog\Admin\Modules\Arrays;
-
+namespace freest\blog\admin\modules\arrays;
 
 function array2form(Array $array): string
 {
@@ -50,9 +49,6 @@ function array2form(Array $array): string
             $out .= '
                 <input type="submit" class="'.$class.'" value="'.$value.'"/>';
         }
-        
-        
     }    
-    
     return $out;
 }
