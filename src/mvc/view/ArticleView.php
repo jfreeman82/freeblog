@@ -66,9 +66,7 @@ class ArticleView extends View
       <div class="row">
 
         <div class="col-sm-8 blog-main">';
-        foreach ($arts as $art) {
-            $this->content .= $this->articleBlock($art);
-        }
+        $this->content .= ArticleView::articleBlock($art);
         $this->content .= ' 
           <nav>
             <ul class="pager">

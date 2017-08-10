@@ -20,32 +20,41 @@ class ArticleAdminController extends AdminController
         $this->setModel(new ArticleAdminModel());
         $this->setView(new ArticleAdminView());
         
-        //echo 'route:' .$this->router->getUri(1);
         $page = $this->router->getUri(1);
         if ($page == 'articles') {
-            $this->articles_list();
+            $arts = $this->model->articles_all();
+            $this->view->articlesList($arts);
         }
-        else { // article       
-            if (filter_input(INPUT_GET, 'id') > 0) {
-                $art = $this->model->article(filter_input(INPUT_GET,'id'));
-                if (filter_input(INPUT_GET, 'action') == "edit") {
-                    $this->article_edit($art);
+        else { 
+            // Single Article
+            if ($this->router->getUri(2) && is_numeric($this->router->getUri(2))) {
+                $aid = $this->router->getUri(2);
+                //echo 'aid: '.$aid;
+                $art = $this->model->article($aid);
+                if ($this->router->getUri(3)) {
+                    $action = $this->router->getUri(3);                
+                    switch ($action) {
+                        case "edit":
+                            $this->article_edit($art);
+                            break;
+                        case "delete":
+                            $this->article_delete($art);
+                            break;
+                        default:                    
+                            $this->view->article($art);              
+                    }
                 }
-                elseif (filter_input(INPUT_GET, 'action') == "delete") {
-                    $this->article_delete($art);
-                }
-                else {                
+                else {
                     $this->view->article($art);              
                 }
             }
-            else {
-                if (filter_input(INPUT_GET, 'action') == "new") {
-                    $this->article_new();
-                }
-                else {
-                    $this->view->error('No ArticleID Set.');
-                }
+            elseif ($this->router->getUri(2) == "new") {
+                $this->article_new();
             }
+            else {
+                $this->view->error('No ArticleID Set.');
+            }
+            
         }
     }
     
@@ -63,7 +72,7 @@ class ArticleAdminController extends AdminController
                 $this->view->article_newForm();
                 break;
             case '1':
-                $this->articles_list();
+                header("Location: ".ADMIN_URL.'articles/');
                 break;
             default:
                 $this->view->article_newForm($check['warning']);
@@ -72,32 +81,32 @@ class ArticleAdminController extends AdminController
 
     private function article_edit(Article $art)
     {
-        $check = $this->model->fp_articleedit();
+        $check = $this->model->fp_articleedit($art);
         switch($check['status']) {
             case '0':
                 $this->view->article_editForm($art);
                 break;  
             case '1':
-                $this->articles_list();
+                header("Location: ".ADMIN_URL.'article/'.$art->id().'/');
                 break;
             default:
-                $this->view->article_editForm($check['warning']);
+                $this->view->article_editForm($art, $check['warning']);
         }
     }
     
     
-    private function article_delete(Article $art): void
+    private function article_delete(Article $art)
     {
-        $check = $this->model->fp_articledelete();
+        $check = $this->model->fp_articledelete($art);
         switch($check['status']) {
             case '0':
                 $this->view->article_deleteForm($art);
                 break;
             case '1':
-                $this->articles_list();
+                header("Location: ".ADMIN_URL.'articles/');
                 break;
             default:
-                $this->view->article_deleteForm($check['warning']);
+                $this->view->article_deleteForm($art, $check['warning']);
         }
     }
 }

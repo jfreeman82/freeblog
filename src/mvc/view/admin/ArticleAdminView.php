@@ -11,9 +11,10 @@ use freest\blog\modules\articles\Article as Article;
  */
 class ArticleAdminView extends AdminView 
 {
-   public function articlesList(Array $articles) {
-    $this->title = 'Articles';
-    $this->content .= '
+    public function articlesList(Array $articles) 
+    {
+        $this->title = 'Articles';
+        $this->content = '
       <table class="table table-bordered">
         <tr class="row">
           <th class="col-lg-1">id</th>
@@ -23,54 +24,54 @@ class ArticleAdminView extends AdminView
           <th class="col-lg-2">actions</th>
         </tr>';
     
-    foreach ($articles as $article) {
-      $this->content .= '
+        foreach ($articles as $article) {
+            $this->content .= '
         <tr class="row">
-          <td><a href="index.php?page=article&id='. $article['id']  .'">'.  $article['id']                               .'</a></td>
-          <td><a href="index.php?page=article&id='. $article['id']  .'">'.  date("d/m/Y",strtotime($article['gendate'])) .'</a></td>
-          <td><a href="index.php?page=article&id='. $article['id']  .'">'.  $article['title']                            .'</a></td>
-          <td><a href="index.php?page=user&id='.    $article['uid'] .'">'.  $article['username']                         .'</a></td>
+          <td><a href="'.ADMIN_URL.'article/'. $article->id()  .'/">'.  $article->id()                               .'</a></td>
+          <td><a href="'.ADMIN_URL.'article/'. $article->id()  .'/">'.  date("d/m/Y",strtotime($article->gendate())) .'</a></td>
+          <td><a href="'.ADMIN_URL.'article/'. $article->id()  .'/">'.  $article->title()                            .'</a></td>
+          <td><a href="'.ADMIN_URL.'user/'.    $article->uid() .'/">'.  $article->user()->username()                 .'</a></td>
           <td>
-            <a href="index.php?page=article&id='. $article['id']  .'&action=edit">  Edit  </a>&nbsp;
-            <a href="index.php?page=article&id='. $article['id']  .'&action=delete">Delete</a>
+            <a href="'.ADMIN_URL.'article/'. $article->id()  .'/edit">  Edit  </a>&nbsp;
+            <a href="'.ADMIN_URL.'article/'. $article->id()  .'/delete">Delete</a>
           </td>
         </tr>';      
-    }
+        }
     
-    $this->content .= ' 
+        $this->content .= ' 
       </table>
-      <a href="index.php?page=article&action=new" class="btn btn-primary">Add New Article</a>';
-    $this->dashboard();
-  }
+      <a href="'.ADMIN_URL.'article/new" class="btn btn-primary">Add New Article</a>';
+        $this->dashboard();
+    }
  
     
-  public function article(Article $article) {
-    $this->title = 'Article';
-    $this->content = '
+    public function article(Article $article) {
+        $this->title = 'Article';
+        $this->content = '
       <article>
         <h1>'.$article->getTitle().'</h1>
         <div class="art-info">posted on '.date("M d, Y", strtotime($article->getGenDate())).' by '.$article->user()->getUsername().'</div>
         <div class="art-body">'.$article->getArticle().'</div>
         <div class="art-buttons">
-          <a href="index.php?page=article&id='.$article->id().'&action=edit"    class="btn btn-warning">Edit  </a>
-          <a href="index.php?page=article&id='.$article->id().'&action=delete"  class="btn btn-danger"> Delete</a>
+          <a href="'.ADMIN_URL.'article/'.$article->id().'/edit"    class="btn btn-warning">Edit  </a>
+          <a href="'.ADMIN_URL.'article/'.$article->id().'/delete"  class="btn btn-danger"> Delete</a>
         </div>
       </article>';
-    $this->dashboard();
-  }
+        $this->dashboard();
+    }
   
-  public function article_newForm($warning = "") {
-    $this->title = 'New Article';
-    $this->base = 'dashboard';
-    $this->content = '
+    public function article_newForm($warning = "") {
+        $this->title = 'New Article';
+        $this->base = 'dashboard';
+        $this->content = '
       <div class="row">
         <div class="col-lg-8">';
-    if ($warning != "") {
-      $this->content .= '
+        if ($warning != "") {
+            $this->content .= '
         <div class="alert alert-danger">'.$warning.'</div>';
-    }
-    $this->content .= ' 
-      <form action="index.php?page=article&action=new" method="POST">
+        }
+        $this->content .= ' 
+      <form action="'.ADMIN_URL.'article/new" method="POST">
         <div class="form-group">
           <label for="an_title">Title</label>
           <input type="text" name="an_title" id="an_title" class="form-control" placeholder="Title" required />
@@ -84,8 +85,9 @@ class ArticleAdminView extends AdminView
       </form>
       </div>
       </div>';
-    $this->dashboard();
-  }
+        $this->dashboard();
+    }
+    
     public function article_editForm(Article $article, $warning = "") 
     {
         $this->title = 'Edit Article';
@@ -97,7 +99,7 @@ class ArticleAdminView extends AdminView
         <div class="alert alert-danger">'.$warning.'</div>';
         }
         $this->content .= ' 
-      <form action="index.php?page=article&id='.$article->id().'&action=edit" method="POST">
+      <form action="'.ADMIN_URL.'article/'.$article->id().'/edit" method="POST">
         <div class="form-group">
           <label for="ae_title">Title</label>
           <input type="text" name="ae_title" id="ae_title" class="form-control" value="'.$article->title().'"/>
@@ -127,7 +129,7 @@ class ArticleAdminView extends AdminView
         <h1>'.$article->title().'</h1>
         <div class="art-info">posted on '.date("M d, Y", strtotime($article->genDate())).' by '.$article->user()->getUsername().'</div>
         <div class="art-body">'.$article->article().'</div>
-        <form action="index.php?page=article&id='.$article->id().'&action=delete" method="POST">
+        <form action="'.ADMIN_URL.'article/'.$article->id().'/delete" method="POST">
           <input type="hidden" name="adform" value="go" />
           <div class="alert alert-danger">Are you sure you want to delete this article?</div>
           <input type="submit" value="Yes, Delete" class="btn btn-danger"/>
@@ -135,12 +137,13 @@ class ArticleAdminView extends AdminView
       </article>';
         $this->dashboard();
     }
+    
+    
   /* PAGE BLOCKS 
    * 
    *  can be reused multiple times per page
    */
   
-    
   // ArticleBlock puts everything in an article and returns it
   private function articleBlock($art) {
     return '
