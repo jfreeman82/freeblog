@@ -16,7 +16,7 @@ class FrontController extends Controller{
         $this->setModel(new ArticleModel());
         $this->setView(new FrontView());
         
-        $arts = $this->model->articles_lastx(5);
+        $arts = $this->model->articles_lastx_obj(5);
         $this->view->front($arts);            
     }
     

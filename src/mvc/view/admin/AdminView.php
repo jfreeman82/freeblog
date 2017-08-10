@@ -88,15 +88,6 @@ class AdminView extends View
         $this->bare();
     }
     
-    // Front
-    public function front() 
-    {
-        $this->content = ' 
-      <h1>Home</h1>
-      <p>The front page</p>';
-        $this->dashboard();
-    }
-  
     
     /* Table Array
      * 

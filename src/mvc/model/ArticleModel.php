@@ -2,7 +2,7 @@
 namespace freest\blog\mvc\model;
 
 use freest\modules\DB\DBC as DBC;
-use freest\blog\modules\Article;
+use freest\blog\modules\articles\Article as Article;
 use freest\blog\mvc\model\Model as Model;
 
 /**
@@ -27,10 +27,39 @@ class ArticleModel extends Model
         return $out;        
     }
     
+    public function articles_all_obj(): Array 
+    {
+        $dbc = new DBC();
+        $sql = "SELECT id FROM articles ORDER BY gendate DESC,title DESC;";
+        $q = $dbc->query($sql) or die("ERROR Model - ".$dbc->error());
+        $out = array();
+        while ($row = $q->fetch_assoc()) {
+            $article = new Article($row['id']);
+            array_push($out, $article);
+        }    
+        return $out;        
+    }
+    public function articles_lastx_obj($x = 5): Array
+    {
+        $dbc = new DBC();
+        $sql = "SELECT id FROM articles ORDER BY gendate DESC ,title DESC LIMIT $x;";
+        $q = $dbc->query($sql) or die("ERROR Model - ".$dbc->error());
+        $out = array();
+        while ($row = $q->fetch_assoc()) {
+            $article = new Article($row['id']);
+            array_push($out, $article);
+        }    
+        return $out;        
+        
+    }
+    
+    
     public function article($aid): Array 
     {
         $article = new Article($aid);
         return $article->dataArray();
     }
+
+
     
 }
