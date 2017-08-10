@@ -30,8 +30,8 @@ class FrontView extends View
       <div class="row">
 
         <div class="col-sm-8 blog-main">';
-        foreach ($arts as $art) {
-            $this->content .= ArticleView::articleBlock($art);
+        foreach ($arts as $art) {   
+            $this->content .= ArticleView::block_article_short($art);
         }
         $this->content .= ' 
           <nav>

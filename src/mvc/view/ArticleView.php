@@ -1,6 +1,8 @@
 <?php
 namespace freest\blog\mvc\view;
 
+use freest\blog\modules\articles\Article as Article;
+
 /**
  * Description of ArticleView
  *
@@ -12,81 +14,57 @@ class ArticleView extends View
      * 
      * Like Front but without sidebar, see how that looks
      */
-    public function articles($arts) {
+    private function layout() 
+    {        
+        $tmp_content = $this->content;
         $this->setCss('stylesheets/css/blog.css');
         $this->content = $this->nav().' 
 
     <div class="container">
 
-      <div class="blog-header">
-        <h1 class="blog-title">'. modules\fbvar('SITE_TITLE').'</h1>
-        <p class="lead blog-description">'. modules\fbvar('SITE_SUBTITLE').'</p>
-      </div>
+        <div class="blog-header">
+            <h1 class="blog-title">'. modules\fbvar('SITE_TITLE').'</h1>
+            <p class="lead blog-description">'. modules\fbvar('SITE_SUBTITLE').'</p>
+        </div>
 
-      <div class="row">
+        <div class="row">
 
-        <div class="col-sm-8 blog-main">';
-        foreach ($arts as $art) {
-            $this->content .= $this->articleBlock($art);
-        }
-        $this->content .= ' 
-          <nav>
-            <ul class="pager">
-              <li><a href="#">Previous</a></li>
-              <li><a href="#">Next</a></li>
-            </ul>
-          </nav>
-
-        </div><!-- /.blog-main -->
-        '.$this->sidebar().' 
-      </div><!-- /.row -->
+            <div class="col-sm-8 blog-main">
+            
+                '.$tmp_content .' 
+            
+            </div><!-- /.blog-main -->
+        
+            '.$this->sidebar().' 
+      
+        </div><!-- /.row -->
 
     </div><!-- /.container -->
 
     '.$this->footer();
         
-        $this->page();
-    }  
-  
+        $this->page();  
+    }
+    
     /*
-     * Article Layout
+     *  Pages
      */
-    public function article($art) 
-    {
-        $this->setCss('stylesheets/css/blog.css');
-        $this->content = $this->nav().'
-
-    <div class="container">
-
-      <div class="blog-header">
-        <h1 class="blog-title">'. fbvar('SITE_TITLE').'</h1>
-        <p class="lead blog-description">'. fbvar('SITE_SUBTITLE').'</p>
-      </div>
-
-      <div class="row">
-
-        <div class="col-sm-8 blog-main">';
+    public function articles($arts) {
         foreach ($arts as $art) {
             $this->content .= $this->articleBlock($art);
         }
-        $this->content .= ' 
-          <nav>
-            <ul class="pager">
-              <li><a href="#">Previous</a></li>
-              <li><a href="#">Next</a></li>
-            </ul>
-          </nav>
-
-        </div><!-- /.blog-main -->
-
-        '.$this->sidebar().' 
-
-      </div><!-- /.row -->
-
-    </div><!-- /.container -->
-    '.$this->footer();
-        $this->page();
+        $this->layout();
+    }  
   
+    public function article($art) 
+    {      
+        $this->content .= $this->articleBlock($art);
+        $this->layout();
+    }
+    public function articleShort($art) 
+    {
+        $this->content .= $this->articleBlock($art);
+        $this->layout();
     }
 
 
@@ -106,7 +84,7 @@ class ArticleView extends View
     }
     
     // Re-imagining articleBlock:
-    protected function block_article(Article $art)
+    public function block_article(Article $art): string
     {
         return '
           <article class="blog-post">
@@ -116,4 +94,15 @@ class ArticleView extends View
           </article>';
     }
     
+    // block_article_short
+    public function block_article_short(Article $art): string
+    {
+        return '
+          <article class="blog-post">
+            <h2 class="blog-post-title">'.$art->title().'</h2>
+            <p class="blog-post-meta">'.date("F j, Y, g:i a",strtotime($art->genDate())).' by <a href="#">'.$art->user()->getUsername().'</a></p>
+            <p class="blog-post-body">'.substr($art->article(),0,200).'... </p>
+            <a href="'.WWW.'article/'.$art->id().'/">Read More...</a>
+          </article>';
+    }
 }

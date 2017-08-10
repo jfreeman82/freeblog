@@ -32,6 +32,10 @@ class Article {
     $this->uid = $row['uid'];
   }
   
+  // Obsolete functions
+  public function getId() {
+      return $this->id;
+  }
   public function getTitle() {
     return $this->title;
   }
@@ -47,6 +51,14 @@ class Article {
   public function getUser() {
     return new User($this->uid);
   }
+  
+  // newest getters:
+  public function id() { return $this->id; }
+  public function title() { return $this->title; }
+  public function article() { return $this->article; }
+  public function gendate() { return $this->gendate; }
+  public function uid() { return $this->uid; }
+  public function user() { return new User($this->uid); }
   
   public function dataArray() {
     return array(
