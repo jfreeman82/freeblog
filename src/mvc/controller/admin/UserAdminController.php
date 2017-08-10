@@ -21,28 +21,34 @@ class UserAdminController extends AdminController
         $this->setModel(new UserAdminModel());
         $this->setView(new UserAdminView());
         
-        $page = filter_input(INPUT_GET, 'page');
-        if ($page == "user") {
-            if (filter_input(INPUT_GET, 'id')) {
+        if ($this->router->getUri(1) == "user") {
+            if ($this->router->getUri(2) && is_numeric($this->router->getUri(2))) {
                 // view user profile
-                $uid = filter_input(INPUT_GET, 'id');
+                $uid = $this->router->getUri(2);
                 $user = new User($uid);  
-                if (filter_input(INPUT_GET, 'action') == "edit") {
-                    $this->editUser($user);
+                if ($this->router->getUri(3)) {
+                    $action = $this->router->getUri(3);
+                    switch ($action) {
+                        case "edit":
+                            $this->editUser($user);
+                            break;
+                        case "delete":
+                            $this->deleteUser($user);
+                            break;
+                        default:      
+                            $this->view->user( $this->model->user($uid) );
+                    }
                 }
-                elseif (filter_input(INPUT_GET, 'action') == "delete") {
-                    $this->deleteUser($user);
-                }
-                else {                
+                else {
                     $this->view->user( $this->model->user($uid) );
                 }
             }
+            elseif ($this->router->getUri(2) == "new") {
+                $this->newUser();
+            }
             else {
-                if (filter_input(INPUT_GET, 'action') == "new") {
-                    $this->newUser();
-                }
                 // view all users
-                $this->allUsers();
+                $this->allUsers();                
             }
         }
         else { // users
@@ -64,8 +70,7 @@ class UserAdminController extends AdminController
                 $this->view->user_newForm();
                 break;
             case '1':
-                $users = $this->model->arraytable_all_users();
-                $this->view->tableArray($users);
+                header("Location: ".ADMIN_URL."users/");
                 break;
             default:
                 $this->view->user_newForm($check['warning']);                
@@ -73,14 +78,13 @@ class UserAdminController extends AdminController
     }
     private function editUser(User $user)
     {
-        $check = $this->model->fp_userEdit();
+        $check = $this->model->fp_userEdit($user);
         switch ($check['status']) {
             case '0':
                 $this->view->user_editForm($user);
                 break;
-            case '1':
-                $users = $this->model->arraytable_all_users();
-                $this->view->tableArray($users);
+            case '1':                
+                header("Location: ".ADMIN_URL."user/".$user->id().'/');
                 break;
             default:
                 $this->view->user_editForm($user, $check['warning']);                
@@ -88,14 +92,13 @@ class UserAdminController extends AdminController
     }
     private function deleteUser(User $user) 
     {
-        $check = $this->model->fp_userDelete();
+        $check = $this->model->fp_userDelete($user);
         switch ($check['status']) {
             case '0':
                 $this->view->user_deleteForm($user);
                 break;
             case '1':
-                $users = $this->model->arraytable_all_users();
-                $this->view->tableArray($users);
+                header("Location: ".ADMIN_URL."users/");
                 break;
             default:
                 $this->view->user_deleteForm($user, $check['warning']);                
