@@ -4,6 +4,8 @@ ini_set('error_reporting', E_ALL & ~E_DEPRECATED);
 ini_set('display_errors', 'STDOUT');
 
 define('BASE_URL', 'http://localhost/blog/public/');
+define('PUBLIC_URL', 'http://localhost/blog/public/');
+define('ROOT_URL', $_SERVER['DOCUMENT_ROOT'].'/blog/');
 
 define("MYSQL_HOST","localhost");
 define("MYSQL_USER","freebloguser");
