@@ -15,7 +15,33 @@ class ArticleView extends View
      * 
      * Like Front but without sidebar, see how that looks
      */
-    
+
+    protected function layout() 
+    {        
+        $tmp_content = $this->content;
+        $this->setCss('stylesheets/css/article.css');
+        $this->content = $this->nav().' 
+
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-sm-8 blog-main">
+            
+                '.$tmp_content .' 
+            
+            </div><!-- /.blog-main -->
+        
+            '.$this->sidebar().' 
+      
+        </div><!-- /.row -->
+
+    </div><!-- /.container -->
+
+    '.$this->footer();
+        
+        $this->page();  
+    }    
     /*
      *  Pages
      */

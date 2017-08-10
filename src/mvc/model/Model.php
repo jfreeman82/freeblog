@@ -33,7 +33,14 @@ class Model
         $q = $dbc->query($sql) or die("ERROR Model - ".$dbc->error());
         $out = array();
         while ($row = $q->fetch_assoc()) {
-            echo $row['month'];
+            //echo $row['month'];
+            $monthyear = $row['month'];
+            $month = substr($monthyear,0,2);
+            $year = substr($monthyear,2);
+            $out[] = array( 'month' => $month,
+                            'year'  => $year
+                    );
         }
+        return $out;
     }
 }

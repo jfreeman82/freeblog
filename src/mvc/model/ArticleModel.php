@@ -59,5 +59,7 @@ class ArticleModel extends Model
         $article = new Article($aid);
         return $article->dataArray();
     }
+
+
     
 }

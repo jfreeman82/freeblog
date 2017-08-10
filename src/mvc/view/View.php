@@ -36,6 +36,7 @@ class View
     <title>'.$this->title.'</title>
     '.$this->css.' 
     <link href="'.BASE_URL.'stylesheets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="'.BASE_URL.'stylesheets/font-awesome/css/font-awesome.min.css">
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -128,14 +129,15 @@ class View
           <div class="sidebar-module">
             <h4>Elsewhere</h4>
             <ol class="list-unstyled">
-              <li><a href="https://github.com/jfreeman82/freeblog">GitHub</a></li>
+              <li><a href="https://github.com/jfreeman82/freestblog" target="_blank" class="black"><i class="fa fa-github fa-3x"></i></a></li>
             </ol>
           </div>
         </div><!-- /.blog-sidebar -->';
         return $sidebar;
     }
   
-    protected function sidebar_archives() {
+    protected function sidebar_archives(): string 
+    {
         
 /*        
             <ol class="list-unstyled">
@@ -153,7 +155,21 @@ class View
               <li><a href="#">April 2013</a></li>
             </ol>
  */
+        $out = '
+            <ol class="list-unstyled">';
         $archives = \freest\blog\mvc\model\Model::retrieve_archives();
+        foreach ($archives as $archive) {
+            $out .= '
+                <li>
+                    <a href="'.WWW.'archives/'.$archive['year'].'/'.$archive['month'].'/">
+                        '.date("F Y",mktime(0,0,0,$archive['month'],1,$archive['year'])).'
+                    </a>
+                </li>';
+
+        }
+        $out .= '
+            </ol>';
+        return $out;
     }
   
     /* 
