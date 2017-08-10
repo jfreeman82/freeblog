@@ -3,6 +3,7 @@ namespace freest\blog\mvc\view;
 
 use freest\blog\modules\articles\Article as Article;
 use freest\blog\modules;
+use freest\modules\DB\DBC as DBC;
 
 /**
  * Description of ArticleView
@@ -45,18 +46,12 @@ class ArticleView extends View
     /*
      *  Pages
      */
-<<<<<<< HEAD
     public function article($art) 
     {
-        $this->setCss('stylesheets/css/blog.css');
+        $this->setCss('stylesheets/css/article.css');
         $this->content = $this->nav().'
 
     <div class="container">
-
-      <div class="blog-header">
-        <h1 class="blog-title">'. fbvar('SITE_TITLE').'</h1>
-        <p class="lead blog-description">'. fbvar('SITE_SUBTITLE').'</p>
-      </div>
 
       <div class="row">
 
@@ -64,9 +59,25 @@ class ArticleView extends View
         $this->content .= ArticleView::articleBlock($art);
         $this->content .= ' 
           <nav>
-            <ul class="pager">
-              <li><a href="#">Previous</a></li>
-              <li><a href="#">Next</a></li>
+            <ul class="pager">';
+        
+        // see if there is a newer(!) post
+        $sql = "SELECT id FROM articles WHERE gendate > '".$art['gendate']." ORDER BY gendate ASC';";
+        $dbc = new DBC();
+        $q = $dbc->query($sql) or die("ERROR ArticleView / article - ".$dbc->error());
+        if ($q->num_rows > 0) { 
+            $aid = $q->fetch_assoc()['id'];
+            $this->content .= '
+                <li><a href="'.WWW.'article/'.$aid.'/">Newer</a></li>';
+        }
+        $sql = "SELECT id FROM articles WHERE gendate < '".$art['gendate']." ORDER BY gendate DESC';";
+        $q = $dbc->query($sql) or die("ERROR ArticleView / article / 2 - ".$dbc->error());
+        if ($q->num_rows > 0) {
+            $aid = $q->fetch_assoc()['id'];
+            $this->content .= '
+                <li><a href="'.WWW.'article/'.$aid.'/">Older</a></li>';
+        }
+        $this->content .= ' 
             </ul>
           </nav>
 
@@ -79,20 +90,14 @@ class ArticleView extends View
     </div><!-- /.container -->
     '.$this->footer();
         $this->page();
-=======
+    }
     public function articles($arts) {
         foreach ($arts as $art) {
             $this->content .= $this->articleBlock($art);
         }
         $this->layout();
-    }  
->>>>>>> show-article
-  
-    public function article($art) 
-    {      
-        $this->content .= $this->articleBlock($art);
-        $this->layout();
     }
+    
     public function articleShort($art) 
     {
         $this->content .= $this->articleBlock($art);

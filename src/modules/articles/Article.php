@@ -39,7 +39,7 @@ class Article {
   public function getUid()      { return $this->uid;            }
   public function getUser()     { return new User($this->uid);  }
   
-<<<<<<< HEAD
+  
   // new getters
   public function id()      { return $this->id;             }
   public function title()   { return $this->title;          }
@@ -47,36 +47,7 @@ class Article {
   public function gendate() { return $this->gendate;        }
   public function uid()     { return $this->uid;            }
   public function user()    { return new User($this->uid);  }
-=======
-  // Obsolete functions
-  public function getId() {
-      return $this->id;
-  }
-  public function getTitle() {
-    return $this->title;
-  }
-  public function getArticle() {
-    return $this->article;
-  }
-  public function getGenDate() {
-    return $this->gendate;
-  }
-  public function getUid() {
-    return $this->uid;
-  }
-  public function getUser() {
-    return new User($this->uid);
-  }
->>>>>>> show-article
-  
-  // newest getters:
-  public function id() { return $this->id; }
-  public function title() { return $this->title; }
-  public function article() { return $this->article; }
-  public function gendate() { return $this->gendate; }
-  public function uid() { return $this->uid; }
-  public function user() { return new User($this->uid); }
-  
+
   public function dataArray() {
     return array(
         'id'      => $this->id,

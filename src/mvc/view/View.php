@@ -100,15 +100,15 @@ class View
     {
         return ' 
     <div class="blog-masthead">
-      <div class="container">
-        <nav class="blog-nav">
-          <a class="blog-nav-item active" href="'.BASE_URL.'">Home</a>
-          <a class="blog-nav-item" href="#">New features</a>
-          <a class="blog-nav-item" href="#">Press</a>
-          <a class="blog-nav-item" href="#">New hires</a>
-          <a class="blog-nav-item" href="#">About</a>
-        </nav>
-      </div>
+        <div class="container">
+            <nav class="blog-nav">
+                <a class="blog-nav-item active" href="'.BASE_URL.'">Home</a>
+                <a class="blog-nav-item" href="'.WWW.'articles/">Articles</a>
+                <a class="blog-nav-item" href="#">Press</a>
+                <a class="blog-nav-item" href="#">New hires</a>
+                <a class="blog-nav-item" href="#">About</a>
+            </nav>
+        </div>
     </div>';
     }
     
@@ -129,7 +129,11 @@ class View
           <div class="sidebar-module">
             <h4>Elsewhere</h4>
             <ol class="list-unstyled">
-              <li><a href="https://github.com/jfreeman82/freestblog" target="_blank" class="black"><i class="fa fa-github fa-3x"></i></a></li>
+              <li>
+                <a href="https://github.com/jfreeman82/freestblog" target="_blank" class="black">
+                    <i class="fa fa-github fa-3x"></i>
+                </a>
+              </li>
             </ol>
           </div>
         </div><!-- /.blog-sidebar -->';
