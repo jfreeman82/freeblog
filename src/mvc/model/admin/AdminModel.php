@@ -2,13 +2,13 @@
 namespace freest\blog\mvc\model\admin;
 
 use freest\modules\DB\DBC;
-
+use freest\blog\mvc\model\Model as Model;
 /**
  * Description of Model
  *
  * @author myrmidex
  */
-class AdminModel {
+class AdminModel extends Model {
 
   public function __construct() {}
   

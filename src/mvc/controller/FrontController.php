@@ -11,20 +11,13 @@ use freest\blog\mvc\view\FrontView as FrontView;
  */
 class FrontController extends Controller{
     
-    private $model;
-    private $view;
-    
-    public function __construct()
-    {
-        $this->model = new ArticleModel();
-        $this->view = new FrontView();
-    }
-    
     public function invoke()
     {
+        $this->setModel(new ArticleModel());
+        $this->setView(new FrontView());
+        
         $arts = $this->model->articles_lastx(5);
-        $this->view->front($arts);
-                
+        $this->view->front($arts);            
     }
     
 }

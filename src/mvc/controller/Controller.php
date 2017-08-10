@@ -13,19 +13,26 @@ use freest\blog\mvc\controller\admin\AdminController as AdminController;
 
 class Controller 
 {
-    private $model;
-    private $view;
+    protected $model;
+    protected $view;
     
     protected $router;
    
-    public function __construct() 
-    {
-        $this->model = new Model();
-        $this->view = new View();
-        
-    }
+    public function __construct() {}
 
-    public function router() 
+    protected function setModel(Model $model) 
+    {
+        $this->model = $model;
+    }
+    protected function setView(View $view) 
+    {
+        $this->view = $view;
+    }
+    protected function setRouter(Router $router) {
+        $this->router = $router;
+    }
+    
+    protected function startRouter() 
     {        
         $router = new Router();
         $router->route('',          '0');
@@ -37,7 +44,7 @@ class Controller
     
     public function invoke() 
     {
-        $this->router();
+        $this->startRouter();
         
         switch ($this->router->get()) {
             case '0':
@@ -67,10 +74,7 @@ class Controller
                 $fc = new FrontController();
                 $fc->setRouter($this->router);
                 $fc->invoke();
-        }
-        
+        }    
     }
-    protected function setRouter(Router $router) {
-        $this->router = $router;
-    }
+    
 }

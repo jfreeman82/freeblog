@@ -4,7 +4,7 @@ namespace freest\blog\mvc\controller\admin;
 use freest\blog\mvc\controller\admin\AdminController as AdminController;
 
 use freest\blog\mvc\model\admin\ArticleAdminModel as ArticleAdminModel;
-use freest\blog\mvc\view\ArticleAdminView as ArticleAdminView;
+use freest\blog\mvc\view\admin\ArticleAdminView as ArticleAdminView;
 
 use freest\blog\modules\articles\Article as Article;
 
@@ -13,20 +13,15 @@ use freest\blog\modules\articles\Article as Article;
  *
  * @author myrmidex
  */
-class ArticleController extends AdminController
-{
-    private $model;
-    private $view;
-    
-    public function __construct()
-    {
-        $this->model = new ArticleAdminModel();
-        $this->view = new ArticleAdminView();
-    }
-    
+class ArticleAdminController extends AdminController
+{    
     public function invoke() 
     {
-        $page = filter_input(INPUT_GET, 'page');
+        $this->setModel(new ArticleAdminModel());
+        $this->setView(new ArticleAdminView());
+        
+        echo 'route:' .$this->router->getUri(1);
+        $page = $this->router->getUri(1);
         if ($page == 'articles') {
             $this->articles_list();
         }

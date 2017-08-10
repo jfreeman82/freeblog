@@ -13,17 +13,18 @@ use freest\blog\modules\arrays;
 class AdminView extends View 
 {
     
-    protected $content;
+    protected $content = "";
     protected $css;
     protected $title;
     protected $warning;
   
-  
-    public function __construct()
-    {
-        $this->content = "";
-    }
-  
+    protected $menu = array(
+        array('Articles',   ADMIN_URL.'articles/'),
+        array('Users',      ADMIN_URL.'users/'),
+        array('Analytics', ADMIN_URL),
+        array('Log Out', ADMIN_URL.'logout/'),
+    );
+    
     /*
      * Lay-Outs
      *      
@@ -44,11 +45,12 @@ class AdminView extends View
         <div class="col-lg-2 col-md-3 col-sm-3 col-xs-4 sidebar">
           <div class="nav-title">'.modules\fbvar('ADMIN_TITLE').'</div>
         
-          <ul class="nav nav-sidebar">
-            <li><a href="index.php?page=articles">Articles</a></li>
-            <li><a href="index.php?page=users">Users</a></li>
-            <li><a href="#">Analytics</a></li>
-            <li><a href="index.php?action=logout">Log Out</a></li>
+          <ul class="nav nav-sidebar">';
+        foreach ($this->menu as $menuitem) {
+            $this->content .= '
+            <li><a href="'.$menuitem[1].'">'.$menuitem[0].'</a></li>';
+        }
+        $this->content .= ' 
           </ul>
         </div>
         
@@ -102,7 +104,7 @@ class AdminView extends View
      */
     public function tableArray(Array $array) 
     {
-        require_once 'inc/modules/arraytable.php';
+        require_once ROOT_URL.'src/modules/arraytable.php';
         $this->title = $array['title'];
         $this->base = 'dashboard';
         $this->content .= arrays\array2table($array);

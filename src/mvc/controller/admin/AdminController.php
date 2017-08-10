@@ -6,8 +6,10 @@ use freest\blog\mvc\controller\Controller as Controller;
 use freest\blog\mvc\model\admin\AdminModel as AdminModel;
 use freest\blog\mvc\view\admin\AdminView as AdminView;
 
-use freest\blog\mvc\controller\admin\ArticleController as ArticleController;
-use freest\blog\mvc\controller\admin\UserController as UserController;
+use freest\blog\mvc\controller\admin\ArticleAdminController as ArticleAdminController;
+use freest\blog\mvc\controller\admin\UserAdminController as UserAdminController;
+
+use freest\blog\mvc\model\admin\ArticleAdminModel as ArticleAdminModel;
 
 use freest\blog\modules\auth;
 /* 
@@ -16,44 +18,44 @@ use freest\blog\modules\auth;
 
 class AdminController extends Controller {
 
-    private $model;
-    private $view;
-  
-  
-    public function __construct() 
-    {
-        $this->model = new AdminModel();
-        $this->view = new AdminView();
-    }
-
     public function invoke() 
     {
-        if (filter_input(INPUT_GET,'action') == "logout") { 
-            auth\logout();
-        }
-    
+        $this->setModel(new AdminModel());
+        $this->setView(new AdminView());
+        
         if (auth\isLoggedIn()) {
     
-            if (filter_input(INPUT_GET,'page')) {
-                $page = filter_input(INPUT_GET, 'page');
-                switch ($page) {
+            if (filter_input(INPUT_GET,'action') == "logout") { 
+                auth\logout();
+            }            
+            
+            if ($this->router->getUri(1)) {
+                switch ($this->router->getUri(1)) {
                     case "articles":
                     case "article":
-                        $ac = new ArticleController();
+                        $ac = new ArticleAdminController();
+                        $ac->setRouter($this->router);
                         $ac->invoke();
                         break;
                     case "users":
                     case "user":
-                        $uc = new UserController();
+                        $uc = new UserAdminController();
+                        $uc->setRouter($this->router);
                         $uc->invoke();
+                        break;
+                    case "logout":
+                        auth\logout();
+                        header("Location: ".BASE_URL.'fbadmin');
+                        //$this->login();
                         break;
                     default: 
                         $this->view->front();
                 }
             }
             else {
-                $artmodel = new \freest\blog\admin\mvc\model\ArticleModel();
-                $arts = $artmodel->articles_all();
+                //echo 'get: '.$this->router->get();
+                $this->setModel(new ArticleAdminModel());
+                $arts = $this->model->articles_all();
                 $this->view->front($arts);
             }
         }
@@ -70,7 +72,8 @@ class AdminController extends Controller {
                 $this->view->login($loginArr);
                 break;
             case '1':
-                $this->view->front();
+                //echo 'uid: '.$_SESSION['uid'];
+                header("Location: ".ADMIN_URL);
                 break;
             default:
                 $warning = $check['warning'];

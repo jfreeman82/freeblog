@@ -1,8 +1,10 @@
 <?php
 namespace freest\blog\mvc\controller\admin;
 
-use freest\blog\mvc\model\admin\UserModel as UserModel;
-use freest\blog\mvc\view\UserView as UserView;
+use freest\blog\mvc\controller\admin\AdminController as AdminController;
+
+use freest\blog\mvc\model\admin\UserAdminModel as UserAdminModel;
+use freest\blog\mvc\view\admin\UserAdminView as UserAdminView;
 
 use freest\blog\modules\User as User;
 
@@ -11,19 +13,14 @@ use freest\blog\modules\User as User;
  *
  * @author myrmidex
  */
-class UserController 
+class UserAdminController extends AdminController
 {
-    private $model;
-    private $view;    
-    
-    public function __construct()
-    {
-        $this->model = new UserModel();
-        $this->view = new UserView();
-    }
     
     public function invoke() 
     {        
+        $this->setModel(new UserAdminModel());
+        $this->setView(new UserAdminView());
+        
         $page = filter_input(INPUT_GET, 'page');
         if ($page == "user") {
             if (filter_input(INPUT_GET, 'id')) {
