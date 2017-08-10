@@ -129,6 +129,4 @@ class UserAdminModel extends AdminModel
             return array('status' => '0');
         }
     }
-    
-    
 }
