@@ -18,7 +18,7 @@ class View
     public function __construct() {}
   
     
-    public function warning($msg)  // a 404 type page
+    public function warning($msg)  // a 404 type page   
     {
         $this->content = '
       <div class="warning">'.$msg.'</div>';
@@ -35,7 +35,7 @@ class View
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>'.$this->title.'</title>
     '.$this->css.' 
-    <link href="stylesheets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="'.BASE_URL.'stylesheets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -43,8 +43,8 @@ class View
   </head>
   <body>
     '.$this->content.'
-    <script src="stylesheets/jquery/jquery-3.2.1.min.js"></script>
-    <script src="stylesheets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="'.BASE_URL.'stylesheets/jquery/jquery-3.2.1.min.js"></script>
+    <script src="'.BASE_URL.'stylesheets/bootstrap/js/bootstrap.min.js"></script>
   </body>
 </html>';
     }
@@ -119,7 +119,7 @@ class View
      */
     public function setCss($css) 
     {
-        $this->css = '<link rel="stylesheet" href="'.$css.'"/>';
+        $this->css = '<link rel="stylesheet" href="'.BASE_URL.$css.'"/>';
     }
   
 }

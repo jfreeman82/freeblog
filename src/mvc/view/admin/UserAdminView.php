@@ -1,14 +1,15 @@
 <?php
-namespace freest\blog\admin\mvc\view;
+namespace freest\blog\mvc\view\admin;
 
-use freest\blog\admin\modules\User as User;
+use freest\blog\mvc\view\admin\AdminView as AdminView;
+use freest\blog\modules\User as User;
 
 /**
  * Description of UserView
  *
  * @author myrmidex
  */
-class UserView extends View 
+class UserAdminView extends AdminView 
 {
     
     public function user(User $user)

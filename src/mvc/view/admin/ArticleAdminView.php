@@ -1,6 +1,7 @@
 <?php
-namespace freest\blog\admin\mvc\view;
+namespace freest\blog\mvc\view\admin;
 
+use freest\blog\mvc\view\admin\AdminView as AdminView;
 use freest\blog\modules\articles\Article as Article;
 
 /**
@@ -8,7 +9,7 @@ use freest\blog\modules\articles\Article as Article;
  *
  * @author myrmidex
  */
-class ArticleView extends View 
+class ArticleAdminView extends AdminView 
 {
    public function articlesList(Array $articles) {
     $this->title = 'Articles';

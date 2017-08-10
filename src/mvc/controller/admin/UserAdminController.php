@@ -1,10 +1,10 @@
 <?php
-namespace freest\blog\admin\mvc\controller;
+namespace freest\blog\mvc\controller\admin;
 
-use freest\blog\admin\mvc\model\UserModel as UserModel;
-use freest\blog\admin\mvc\view\UserView as UserView;
+use freest\blog\mvc\model\admin\UserModel as UserModel;
+use freest\blog\mvc\view\UserView as UserView;
 
-use freest\blog\admin\modules\User as User;
+use freest\blog\modules\User as User;
 
 /**
  * Description of UserController

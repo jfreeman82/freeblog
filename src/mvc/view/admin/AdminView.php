@@ -1,15 +1,17 @@
 <?php
-namespace freest\blog\admin\mvc\view;
+namespace freest\blog\mvc\view\admin;
 
+use freest\blog\mvc\view\View as View;
 use freest\blog\modules;
-use freest\blog\admin\modules\arrays;
+use freest\blog\modules\arrays;
 
 /**
  * Description of View
  *
  * @author myrmidex
  */
-class View {
+class AdminView extends View 
+{
     
     protected $content;
     protected $css;
@@ -61,38 +63,15 @@ class View {
         $this->page();
   }  
   
-    private function page()
+    /* 
+     * Pages
+     *    To fill the Lay-Outs
+     *    
+     */
+    public function login(Array $formArray) 
     {
-        echo  '<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>'.$this->title.'</title>
-    '.$this->css.' 
-    <link href="'.ADMIN_URL.'inc/modules/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-  </head>
-  <body>
-    '.$this->content.'
-    <script src="'.ADMIN_URL.'inc/modules/jquery/jquery-3.2.1.min.js"></script>
-    <script src="'.ADMIN_URL.'inc/modules/bootstrap/js/bootstrap.min.js"></script>
-  </body>
-</html>';
-    }
-  
-  /* 
-   * Pages
-   *    To fill the Lay-Outs
-   *    
-   */
-    public function login(Array $formArray) {
-        require_once 'inc/modules/arrayform.php';
-        $this->setCss('inc/stylesheets/css/login.css');
+        require_once $_SERVER['DOCUMENT_ROOT'].'/blog/src/modules/arrayform.php';
+        $this->setCss('stylesheets/css/login.css');
         $this->content = '
     <div class="container" id="login">
         <div class="row">

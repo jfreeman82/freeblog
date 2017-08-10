@@ -1,25 +1,27 @@
 <?php
-namespace freest\blog\admin\mvc\controller;
+namespace freest\blog\mvc\controller\admin;
 
-use freest\blog\admin\mvc\model\ArticleModel as ArticleModel;
-use freest\blog\admin\mvc\view\ArticleView as ArticleView;
+use freest\blog\mvc\controller\admin\AdminController as AdminController;
 
-use freest\blog\admin\modules\articles\Article as Article;
+use freest\blog\mvc\model\admin\ArticleAdminModel as ArticleAdminModel;
+use freest\blog\mvc\view\ArticleAdminView as ArticleAdminView;
+
+use freest\blog\modules\articles\Article as Article;
 
 /**
  * Description of ArticleController
  *
  * @author myrmidex
  */
-class ArticleController 
+class ArticleController extends AdminController
 {
     private $model;
     private $view;
     
     public function __construct()
     {
-        $this->model = new ArticleModel();
-        $this->view = new ArticleView();
+        $this->model = new ArticleAdminModel();
+        $this->view = new ArticleAdminView();
     }
     
     public function invoke() 
@@ -103,6 +105,4 @@ class ArticleController
                 $this->view->article_deleteForm($check['warning']);
         }
     }
-
-    
 }

@@ -1,5 +1,5 @@
 <?php
-namespace freest\blog\admin\modules\arrays;
+namespace freest\blog\modules\arrays;
 
 function array2form(Array $array): string
 {
@@ -9,13 +9,13 @@ function array2form(Array $array): string
     $formtitleclass = $array['form-title-class'];
     
     $out = '
-        <form ';
+                <form ';
     if ($formclass != "") {  $out .= 'class="'.$formclass.'" ';   }
     if ($formaction != "") { $out .= 'action="'.$formaction.'" '; }
     $out .= 'method="POST">';
     if ($formtitle != "") {
         $out .= '
-            <h2';
+                    <h2';
         if ($formtitleclass != "") { $out .= ' class="'.$formtitleclass.'"'; }
         $out .= '>'.$formtitle.'</h2>';
     }
@@ -35,20 +35,22 @@ function array2form(Array $array): string
                     <label for="'.$id.'" class="'.$labelclass.'">'.$label.'</label>';
             }
             $out .= '
-                <input type="'.$type.'" id="'.$id.'" name="'.$name.'" class="'.$class.'" />';
+                    <input type="'.$type.'" id="'.$id.'" name="'.$name.'" class="'.$class.'" />';
         }
         elseif ($type == "hidden") {
             $name  = $el['name'];
             $value = $el['value'];
             $out .= '
-                <input type="hidden" name="'.$name.'" value="'.$value.'"/>';
+                    <input type="hidden" name="'.$name.'" value="'.$value.'"/>';
         }
         elseif ($type == "submit") {
             $class = $el['class'];
             $value = $el['value'];
             $out .= '
-                <input type="submit" class="'.$class.'" value="'.$value.'"/>';
+                    <input type="submit" class="'.$class.'" value="'.$value.'"/>';
         }
-    }    
+    }
+    $out .= '
+                </form>';
     return $out;
 }

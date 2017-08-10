@@ -1,5 +1,5 @@
 <?php
-namespace freest\blog\admin\mvc\model;
+namespace freest\blog\mvc\model\admin;
 
 use freest\modules\DB\DBC;
 
@@ -8,7 +8,7 @@ use freest\modules\DB\DBC;
  *
  * @author myrmidex
  */
-class Model {
+class AdminModel {
 
   public function __construct() {}
   

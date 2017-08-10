@@ -1,5 +1,5 @@
 <?php
-namespace freest\blog\admin\modules\auth;
+namespace freest\blog\modules\auth;
 
 function isLoggedIn(): bool 
 {

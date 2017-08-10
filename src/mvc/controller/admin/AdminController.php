@@ -1,18 +1,20 @@
 <?php
-namespace freest\blog\admin\mvc\controller;
+namespace freest\blog\mvc\controller\admin;
 
-use freest\blog\admin\mvc\model\Model as Model;
-use freest\blog\admin\mvc\view\View as View;
+use freest\blog\mvc\controller\Controller as Controller;
 
-use freest\blog\admin\mvc\controller\ArticleController as ArticleController;
-use freest\blog\admin\mvc\controller\UserController as UserController;
+use freest\blog\mvc\model\admin\AdminModel as AdminModel;
+use freest\blog\mvc\view\admin\AdminView as AdminView;
 
-use freest\blog\admin\modules\auth;
+use freest\blog\mvc\controller\admin\ArticleController as ArticleController;
+use freest\blog\mvc\controller\admin\UserController as UserController;
+
+use freest\blog\modules\auth;
 /* 
  * Controller.php
  */
 
-class Controller {
+class AdminController extends Controller {
 
     private $model;
     private $view;
@@ -20,8 +22,8 @@ class Controller {
   
     public function __construct() 
     {
-        $this->model = new Model();
-        $this->view = new View();
+        $this->model = new AdminModel();
+        $this->view = new AdminView();
     }
 
     public function invoke() 

@@ -1,7 +1,8 @@
 <?php
-namespace freest\blog\admin\mvc\model;
+namespace freest\blog\mvc\model\admin;
 
-use freest\blog\admin\modules\User as User;
+use freest\blog\mvc\model\admin\AdminModel as AdminModel;
+use freest\blog\modules\User as User;
 use freest\modules\DB\DBC as DBC;
 
 /**
@@ -9,7 +10,7 @@ use freest\modules\DB\DBC as DBC;
  *
  * @author myrmidex
  */
-class UserModel extends Model 
+class UserAdminModel extends AdminModel 
 {
     // arraytable_all_users
     public function arraytable_all_users(): Array 

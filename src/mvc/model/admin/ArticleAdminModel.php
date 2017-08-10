@@ -1,8 +1,9 @@
 <?php
 
-namespace freest\blog\admin\mvc\model;
+namespace freest\blog\mvc\model\admin;
 
-use freest\blog\admin\modules\articles\Article as Article;
+use freest\blog\mvc\model\admin\AdminModel as AdminModel;
+use freest\blog\modules\articles\Article as Article;
 use freest\modules\DB\DBC as DBC;
 
 /**
@@ -10,7 +11,7 @@ use freest\modules\DB\DBC as DBC;
  *
  * @author myrmidex
  */
-class ArticleModel extends Model 
+class ArticleAdminModel extends AdminModel 
 {
 
     public function articles_all(): Array 

@@ -1,5 +1,5 @@
 <?php
-namespace freest\blog\modules;
+namespace freest\blog\modules\articles;
 
 use freest\modules\DB\DBC as DBC;
 use freest\blog\modules\User as User;

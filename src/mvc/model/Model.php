@@ -2,7 +2,8 @@
 namespace freest\blog\mvc\model;
 
 use freest\modules\DB\DBC as DBC;
-use freest\blog\modules\Article;
+use freest\blog\modules\articles\Article as Article;
+
 /**
  * Description of Model
  *
