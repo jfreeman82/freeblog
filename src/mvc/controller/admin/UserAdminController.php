@@ -20,7 +20,7 @@ class UserAdminController extends AdminController
     {        
         $this->setModel(new UserAdminModel());
         $this->setView(new UserAdminView());
-        
+             
         if ($this->router->getUri(1) == "user") {
             if ($this->router->getUri(2) && is_numeric($this->router->getUri(2))) {
                 // view user profile

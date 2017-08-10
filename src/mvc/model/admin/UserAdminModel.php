@@ -34,7 +34,7 @@ class UserAdminModel extends AdminModel
             $username = '<a href="'.ADMIN_URL.'user/'.$uid.'/">'.$user->getUsername().'</a>';
             $data[] = array($uid, $username,$action);
         }    
-        $out['title'] = 'articles';
+        $out['title'] = 'Users';
         $out['table-class'] = 'table table-bordered';
         $out['data'] = $data;
         $out['footer'] = '  
