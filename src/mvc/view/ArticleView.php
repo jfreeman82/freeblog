@@ -104,6 +104,20 @@ class ArticleView extends View
         $this->layout();
     }
 
+    public function articles_olist(Array $arts)
+    {
+        $this->content .= '<h1 class="page-header">All Posts</h1>';
+        $this->content .= '
+            
+            <ol class="list-unstyled">';
+        foreach ($arts as $art) {
+            $this->content .= '
+                <li><a href="'.WWW.'article/'.$art['id'].'/">'.$art['title'].'</a></li>';
+        }
+        $this->content .= '
+            </ol>';
+        $this->layout();
+    }
 
     /* PAGE BLOCKS 
      * 
@@ -141,5 +155,13 @@ class ArticleView extends View
             <p class="blog-post-body">'.substr($art->article(),0,200).'... </p>
             <a href="'.WWW.'article/'.$art->id().'/">Read More...</a>
           </article>';
+    }
+    
+    public function pageHeader($title,$subtitle) {
+        return '      
+            <div class="blog-header">
+                <h1 class="blog-title">'.$title.'</h1>
+                <p class="lead blog-description">'.$subtitle.'</p>
+            </div>';     
     }
 }

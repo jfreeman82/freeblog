@@ -35,7 +35,7 @@ class ArticleController extends Controller
         else {
             // articles
             $art_data = $this->model->articles_all();
-            $this->view->articles($art_data);
+            $this->view->articles_olist($art_data);
         }
     }
     
