@@ -25,4 +25,22 @@ class Model
         }    
         return $out;
     }    
+    
+    public function retrieve_archives() {
+        //$sql = "SELECT id, gendate, DISTINCT MONTH(gendate) AS 'month', DISTINCT YEAR(gendate) AS 'year' FROM articles;";
+        $sql = "SELECT DATE_FORMAT(gendate, '%m%Y') AS month FROM articles GROUP BY month";
+        $dbc = new DBC();
+        $q = $dbc->query($sql) or die("ERROR Model - ".$dbc->error());
+        $out = array();
+        while ($row = $q->fetch_assoc()) {
+            //echo $row['month'];
+            $monthyear = $row['month'];
+            $month = substr($monthyear,0,2);
+            $year = substr($monthyear,2);
+            $out[] = array( 'month' => $month,
+                            'year'  => $year
+                    );
+        }
+        return $out;
+    }
 }

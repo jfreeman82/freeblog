@@ -1,36 +1,39 @@
 <?php
 namespace freest\blog\mvc\controller;
 
-use freest\router\Router as Router;
 use freest\blog\mvc\model\ArticleModel as ArticleModel;
 use freest\blog\mvc\view\ArticleView as ArticleView;
+
+use freest\blog\mvc\controller\Controller as Controller;
 
 /**
  * Description of ArticleController
  *
  * @author myrmidex
  */
-class ArticleController 
-{
-    private $model;
-    private $view;
-            
-    private $router;
-    
-    public function setRouter(Router $router) {
-        $this->model = new ArticleModel();
-        $this->view = new ArticleView();
-        $this->router = $router;
-    }
-    
+class ArticleController extends Controller
+{       
     public function invoke()
     {
-        if ($this->router->second()) {
-            $aid = $this->router->second();
-            $art_data = $this->model->article($aid);
-            $this->view->article($art_data);
+
+        $this->model = new ArticleModel();
+        $this->view = new ArticleView();
+
+        if ($this->router->getUri(0) == "article") {
+            
+            if ($this->router->getUri(1)) {
+                $aid = $this->router->getUri(1);
+                $art_data = $this->model->article($aid);
+                $this->view->article($art_data);            
+            }
+            else {
+                // articles
+                $art_data = $this->model->articles_all();
+                $this->view->articles($art_data);
+            }
         }
         else {
+            // articles
             $art_data = $this->model->articles_all();
             $this->view->articles($art_data);
         }
