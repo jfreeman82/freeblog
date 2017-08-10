@@ -1,5 +1,5 @@
 <?php
-namespace freest\blog\admin\modules\arrays;
+namespace freest\blog\modules\arrays;
 
 /*
  * array( 'table-class' => 'table table-bordered',
