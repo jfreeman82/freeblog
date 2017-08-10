@@ -2,6 +2,7 @@
 namespace freest\blog\mvc\view;
 
 use freest\blog\modules\articles\Article as Article;
+use freest\blog\modules;
 
 /**
  * Description of ArticleView
@@ -14,37 +15,6 @@ class ArticleView extends View
      * 
      * Like Front but without sidebar, see how that looks
      */
-    private function layout() 
-    {        
-        $tmp_content = $this->content;
-        $this->setCss('stylesheets/css/blog.css');
-        $this->content = $this->nav().' 
-
-    <div class="container">
-
-        <div class="blog-header">
-            <h1 class="blog-title">'. modules\fbvar('SITE_TITLE').'</h1>
-            <p class="lead blog-description">'. modules\fbvar('SITE_SUBTITLE').'</p>
-        </div>
-
-        <div class="row">
-
-            <div class="col-sm-8 blog-main">
-            
-                '.$tmp_content .' 
-            
-            </div><!-- /.blog-main -->
-        
-            '.$this->sidebar().' 
-      
-        </div><!-- /.row -->
-
-    </div><!-- /.container -->
-
-    '.$this->footer();
-        
-        $this->page();  
-    }
     
     /*
      *  Pages

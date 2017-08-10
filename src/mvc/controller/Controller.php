@@ -38,6 +38,7 @@ class Controller
         $router->route('',          '0');
         $router->route('index.php', '0');
         $router->route('articles',  '1');
+        $router->route('article',  '1');
         $router->route('fbadmin',   '2');
         $this->router = $router;
     }
@@ -53,15 +54,18 @@ class Controller
                  * 
                  * We get x last articles
                  */
+                //echo 'home';
                 $fc = new FrontController();
                 $fc->setRouter($this->router);
                 $fc->invoke();
                 break;
             case '1':
                 // Articles
+                //echo 'articles';
                 $ac = new ArticleController();
                 $ac->setRouter($this->router);
                 $ac->invoke();
+                break;
             case '2':
                 //echo 'admin';
                 require '../admin.config.php';

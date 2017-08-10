@@ -30,7 +30,7 @@ class ArticleModel extends Model
     public function articles_all_obj(): Array 
     {
         $dbc = new DBC();
-        $sql = "SELECT id FROM articles ORDER BY gendate,title DESC;";
+        $sql = "SELECT id FROM articles ORDER BY gendate DESC,title DESC;";
         $q = $dbc->query($sql) or die("ERROR Model - ".$dbc->error());
         $out = array();
         while ($row = $q->fetch_assoc()) {
@@ -42,7 +42,7 @@ class ArticleModel extends Model
     public function articles_lastx_obj($x = 5): Array
     {
         $dbc = new DBC();
-        $sql = "SELECT id FROM articles ORDER BY gendate,title DESC LIMIT $x;";
+        $sql = "SELECT id FROM articles ORDER BY gendate DESC ,title DESC LIMIT $x;";
         $q = $dbc->query($sql) or die("ERROR Model - ".$dbc->error());
         $out = array();
         while ($row = $q->fetch_assoc()) {

@@ -48,7 +48,40 @@ class View
   </body>
 </html>';
     }
-  
+
+    protected function layout() 
+    {        
+        $tmp_content = $this->content;
+        $this->setCss('stylesheets/css/blog.css');
+        $this->content = $this->nav().' 
+
+    <div class="container">
+
+        <div class="blog-header">
+            <h1 class="blog-title">'. modules\fbvar('SITE_TITLE').'</h1>
+            <p class="lead blog-description">'. modules\fbvar('SITE_SUBTITLE').'</p>
+        </div>
+
+        <div class="row">
+
+            <div class="col-sm-8 blog-main">
+            
+                '.$tmp_content .' 
+            
+            </div><!-- /.blog-main -->
+        
+            '.$this->sidebar().' 
+      
+        </div><!-- /.row -->
+
+    </div><!-- /.container -->
+
+    '.$this->footer();
+        
+        $this->page();  
+    }
+
+    
     // FOOTER
     protected function footer() 
     {
@@ -81,14 +114,30 @@ class View
     // SIDEBAR
     protected function sidebar() 
     {
-        return '
+        $sidebar = '
         <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
           <div class="sidebar-module sidebar-module-inset">
             <h4>About</h4>
             <p>'. modules\fbvar('SITE_ABOUT').'</p>
           </div>
           <div class="sidebar-module">
-            <h4>Archives</h4>
+            <h4>Archives</h4>'.$this->sidebar_archives();
+        
+        $sidebar .= ' 
+          </div>
+          <div class="sidebar-module">
+            <h4>Elsewhere</h4>
+            <ol class="list-unstyled">
+              <li><a href="https://github.com/jfreeman82/freeblog">GitHub</a></li>
+            </ol>
+          </div>
+        </div><!-- /.blog-sidebar -->';
+        return $sidebar;
+    }
+  
+    protected function sidebar_archives() {
+        
+/*        
             <ol class="list-unstyled">
               <li><a href="#">March 2014</a></li>
               <li><a href="#">February 2014</a></li>
@@ -103,16 +152,9 @@ class View
               <li><a href="#">May 2013</a></li>
               <li><a href="#">April 2013</a></li>
             </ol>
-          </div>
-          <div class="sidebar-module">
-            <h4>Elsewhere</h4>
-            <ol class="list-unstyled">
-              <li><a href="https://github.com/jfreeman82/freeblog">GitHub</a></li>
-            </ol>
-          </div>
-        </div><!-- /.blog-sidebar -->';
+ */
+        $archives = \freest\blog\mvc\model\Model::retrieve_archives();
     }
-  
   
     /* 
      * SETTERS
