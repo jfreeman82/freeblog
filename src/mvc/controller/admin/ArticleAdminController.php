@@ -20,7 +20,7 @@ class ArticleAdminController extends AdminController
         $this->setModel(new ArticleAdminModel());
         $this->setView(new ArticleAdminView());
         
-        echo 'route:' .$this->router->getUri(1);
+        //echo 'route:' .$this->router->getUri(1);
         $page = $this->router->getUri(1);
         if ($page == 'articles') {
             $this->articles_list();

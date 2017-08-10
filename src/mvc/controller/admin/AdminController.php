@@ -6,18 +6,20 @@ use freest\blog\mvc\controller\Controller as Controller;
 use freest\blog\mvc\model\admin\AdminModel as AdminModel;
 use freest\blog\mvc\view\admin\AdminView as AdminView;
 
+use freest\blog\mvc\controller\admin\FrontAdminController as FrontAdminController;
 use freest\blog\mvc\controller\admin\ArticleAdminController as ArticleAdminController;
 use freest\blog\mvc\controller\admin\UserAdminController as UserAdminController;
 
 use freest\blog\mvc\model\admin\ArticleAdminModel as ArticleAdminModel;
+use freest\blog\mvc\view\admin\FrontAdminView as FrontAdminView;
 
 use freest\blog\modules\auth;
 /* 
  * Controller.php
  */
 
-class AdminController extends Controller {
-
+class AdminController extends Controller 
+{
     public function invoke() 
     {
         $this->setModel(new AdminModel());
@@ -25,10 +27,6 @@ class AdminController extends Controller {
         
         if (auth\isLoggedIn()) {
     
-            if (filter_input(INPUT_GET,'action') == "logout") { 
-                auth\logout();
-            }            
-            
             if ($this->router->getUri(1)) {
                 switch ($this->router->getUri(1)) {
                     case "articles":
@@ -49,12 +47,15 @@ class AdminController extends Controller {
                         //$this->login();
                         break;
                     default: 
-                        $this->view->front();
+                        $fc = new FrontAdminController();
+                        $fc->setRouter($this->router);
+                        $fc->invoke();
                 }
             }
             else {
                 //echo 'get: '.$this->router->get();
                 $this->setModel(new ArticleAdminModel());
+                $this->setView(new FrontAdminView());
                 $arts = $this->model->articles_all();
                 $this->view->front($arts);
             }
@@ -62,8 +63,8 @@ class AdminController extends Controller {
         else {
             $this->login();      
         }
+        
     }
-    
     private function login() {
         $check = $this->model->fp_login();
         switch($check['status']) {
@@ -80,7 +81,9 @@ class AdminController extends Controller {
                 $this->view->setWarning($warning);
                 $loginArr = $this->model->formArray_login();
                 $this->view->login($loginArr);
+            
         }
     }
+    
 }
 
