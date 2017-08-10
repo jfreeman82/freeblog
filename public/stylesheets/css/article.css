@@ -1,3 +1,7 @@
+/* 
+    Created on : Aug 11, 2017, 12:35:04 AM
+    Author     : myrmidex
+*/
 /*
  * Globals
  */
@@ -140,4 +144,7 @@ h6, .h6 {
 .black {
   color: black; }
 
-/*# sourceMappingURL=blog.css.map */
+.blog-sidebar {
+  margin-top: 185px; }
+
+/*# sourceMappingURL=article.css.map */
