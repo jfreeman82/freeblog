@@ -21,8 +21,8 @@ class UserAdminView extends AdminView
         <div>email: '.$user->getEmail().'</div>
         <div>Date Joined: '.date("d/m/Y",strtotime($user->getGenDate())).'</div>
         <div class="art-buttons">
-          <a href="index.php?page=user&id='.$user->id().'&action=edit"    class="btn btn-warning">Edit  </a>
-          <a href="index.php?page=user&id='.$user->id().'&action=delete"  class="btn btn-danger"> Delete</a>
+          <a href="'.ADMIN_URL.'user/'.$user->id().'/edit/"    class="btn btn-warning">Edit  </a>
+          <a href="'.ADMIN_URL.'user/'.$user->id().'/delete/"  class="btn btn-danger"> Delete</a>
         </div>
       </article>';
         $this->dashboard();
@@ -39,7 +39,7 @@ class UserAdminView extends AdminView
         <div class="alert alert-danger">'.$warning.'</div>';
         }
         $this->content .= ' 
-      <form action="index.php?page=user&action=new" method="POST">
+      <form action="'.ADMIN_URL.'user/new/" method="POST">
         <div class="form-group">
           <label for="un_username">Username</label>
           <input type="text" name="un_username" id="un_username" class="form-control" placeholder="Username" required />
@@ -75,7 +75,7 @@ class UserAdminView extends AdminView
         <div class="alert alert-danger">'.$warning.'</div>';
         }
         $this->content .= ' 
-      <form action="index.php?page=user&id='.$user->id().'&action=edit" method="POST">
+      <form action="'.ADMIN_URL.'user/'.$user->id().'/edit/" method="POST">
         <div class="form-group">
           <label for="ue_username">Username</label>
           <input type="text" name="ue_username" id="ue_username" class="form-control" value="'.$user->username().'"/>
@@ -113,7 +113,7 @@ class UserAdminView extends AdminView
           <tr><td>username</td><td>'.$user->username().'</td></tr>
           <tr><td>email   </td><td>'.$user->email()   .'</td></tr>
         </table>    
-        <form action="index.php?page=user&id='.$user->id().'&action=delete" method="POST">
+        <form action="'.ADMIN_URL.'user/'.$user->id().'/delete" method="POST">
           <input type="hidden" name="udform" value="go" />
           <div class="alert alert-danger">Are you sure you want to delete this user?</div>
           <input type="submit" value="Yes, Delete" class="btn btn-danger"/>

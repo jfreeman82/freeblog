@@ -29,16 +29,16 @@ class UserAdminModel extends AdminModel
             $uid = $row['id'];
             $user = new User($uid);
             $action = ' 
-            <a href="index.php?page=user&id='. $uid .'&action=edit">  Edit  </a>&nbsp;
-            <a href="index.php?page=user&id='. $uid .'&action=delete">Delete</a>';
-            $username = '<a href="index.php?page=user&id='.$uid.'">'.$user->getUsername().'</a>';
+            <a href="'.ADMIN_URL.'user/'. $uid .'/edit/">  Edit  </a>&nbsp;
+            <a href="'.ADMIN_URL.'user/'. $uid .'/delete/">Delete</a>';
+            $username = '<a href="'.ADMIN_URL.'user/'.$uid.'/">'.$user->getUsername().'</a>';
             $data[] = array($uid, $username,$action);
         }    
         $out['title'] = 'articles';
         $out['table-class'] = 'table table-bordered';
         $out['data'] = $data;
         $out['footer'] = '  
-      <a href="index.php?page=user&action=new" class="btn btn-primary">Add New User</a>';
+      <a href="'.ADMIN_URL.'user/new" class="btn btn-primary">Add New User</a>';
     
         return $out;
     }
@@ -81,11 +81,10 @@ class UserAdminModel extends AdminModel
         }
     }
     
-    public function fp_userEdit(): Array
+    public function fp_userEdit(User $user): Array
     {
         if (filter_input(INPUT_POST, 'ueform') == "go") {
-            if (!filter_input(INPUT_GET, 'id')) { return array('status' => 'warning', 'warning' => 'UserID missing.');}
-            $uid = filter_input(INPUT_GET, 'id');
+            $uid = $user->id();
             $username = filter_input(INPUT_POST, 'ue_username');
             $password1 = filter_input(INPUT_POST, 'ue_password1');
             $password2 = filter_input(INPUT_POST, 'ue_password2');
@@ -113,11 +112,10 @@ class UserAdminModel extends AdminModel
         }
     }
     
-    public function fp_userDelete(): Array
+    public function fp_userDelete(User $user): Array
     {
         if (filter_input(INPUT_POST, 'udform') == "go") {
-            if (!filter_input(INPUT_GET, 'id')) { return array('status' => 'warning', 'warning' => 'UserID missing'); }
-            $uid = filter_input(INPUT_GET, 'id');
+            $uid = $user->id();
             $sql = "DELETE FROM users WHERE id = '$uid';";
             $dbc = new DBC();
             if ($dbc->query($sql)) {
@@ -131,6 +129,4 @@ class UserAdminModel extends AdminModel
             return array('status' => '0');
         }
     }
-    
-    
 }

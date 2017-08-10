@@ -13,7 +13,6 @@ use freest\modules\DB\DBC as DBC;
  */
 class ArticleAdminModel extends AdminModel 
 {
-
     public function articles_all(): Array 
     {
         $dbc = new DBC();
@@ -21,11 +20,13 @@ class ArticleAdminModel extends AdminModel
         $q = $dbc->query($sql) or die("ERROR Model - ".$dbc->error());
         $out = array();
         while ($row = $q->fetch_assoc()) {
-            array_push($out, $this->article($row['id']));
+            $article = new Article($row['id']);
+            array_push($out, $article);
         }    
         return $out;
     }
-  
+    
+    
     public function articles_arraytable(): Array 
     {
         $sql = "SELECT id FROM articles ORDER BY gendate,title DESC;";
@@ -56,10 +57,15 @@ class ArticleAdminModel extends AdminModel
     }
 
     // Obsolete - use articleArray instead
-    public function article(int $aid): Article 
+    public function articleObj(int $aid): Article 
     {
         return new Article($aid);
     }
+    public function article(int $aid): Article
+    {
+        return new Article($aid);
+    }
+    
     // Newest version of article
     public function articleArray(int $aid): Array 
     {
@@ -103,11 +109,10 @@ class ArticleAdminModel extends AdminModel
         }
     }
   
-    public function fp_articleEdit(): Array 
+    public function fp_articleEdit(Article $art): Array 
     {
     if (filter_input(INPUT_POST, 'aeform') == "go") {
-      if (!filter_input(INPUT_GET, 'id')) { return array('status' => 'warning', 'warning' => 'ArticleID missing.'); }
-      $aid = filter_input(INPUT_GET, 'id');
+      $aid = $art->id();
       $title = filter_input(INPUT_POST, 'ae_title');
       $article = filter_input(INPUT_POST, 'ae_article');
       if ($title == "" || $article == "") {return array('status' => 'warning', 'warning' => 'Some fields were empty.');}
@@ -125,11 +130,10 @@ class ArticleAdminModel extends AdminModel
       return array('status' => '0');
     }
   }
-  public function fp_articleDelete(): Array 
+  public function fp_articleDelete(Article $art): Array 
   {
     if (filter_input(INPUT_POST, 'adform') == "go") {
-      if (!filter_input(INPUT_GET, 'id')) { return array('status' => 'warning', 'warning' => 'articleID missing.'); }
-      $aid = filter_input(INPUT_GET, 'id');
+      $aid = $art->id();
       $sql = "DELETE FROM articles WHERE id = '$aid';";
       $dbc = new DBC();
       if ($dbc->query($sql)) {

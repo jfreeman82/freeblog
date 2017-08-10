@@ -31,22 +31,21 @@ class Article {
     $this->gendate = $row['gendate'];
     $this->uid = $row['uid'];
   }
+  // Obsolete Getters
+  public function getId()       { return $this->id;             }
+  public function getTitle()    { return $this->title;          }
+  public function getArticle()  { return $this->article;        }
+  public function getGenDate()  { return $this->gendate;        }
+  public function getUid()      { return $this->uid;            }
+  public function getUser()     { return new User($this->uid);  }
   
-  public function getTitle() {
-    return $this->title;
-  }
-  public function getArticle() {
-    return $this->article;
-  }
-  public function getGenDate() {
-    return $this->gendate;
-  }
-  public function getUid() {
-    return $this->uid;
-  }
-  public function getUser() {
-    return new User($this->uid);
-  }
+  // new getters
+  public function id()      { return $this->id;             }
+  public function title()   { return $this->title;          }
+  public function article() { return $this->article;        }
+  public function gendate() { return $this->gendate;        }
+  public function uid()     { return $this->uid;            }
+  public function user()    { return new User($this->uid);  }
   
   public function dataArray() {
     return array(
