@@ -48,9 +48,11 @@ class Controller
         
         switch ($this->router->get()) {
             case '0':
-                //echo 'home';
-                //echo 0;
-                //echo $this->router->get();
+                /*
+                 * Home
+                 * 
+                 * We get x last articles
+                 */
                 $fc = new FrontController();
                 $fc->setRouter($this->router);
                 $fc->invoke();
