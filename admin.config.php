@@ -17,3 +17,13 @@ require_once 'src/mvc/view/admin/ArticleAdminView.php';
 require_once 'src/mvc/view/admin/UserAdminView.php';
 
 require_once 'src/modules/auth.php';
+
+
+
+$menu = array(
+    array('title' => 'Articles',  'href' => ADMIN_URL.'articles/'),
+    array('title' => 'Users',     'href' => ADMIN_URL.'users/'),
+    array('title' => 'Analytics', 'href' => ADMIN_URL),
+    array('title' => 'Log Out',   'href' => ADMIN_URL.'logout/'),
+);
+    

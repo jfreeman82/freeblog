@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ site_title }}</title>
+    <link rel="stylesheet" href="{{ www }}stylesheets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ www }}stylesheets/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{{ www }}fbadmin/stylesheets/css/login.css">
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+
+    <div class="container" id="login">
+      <div class="row">
+        <div class="col-lg-4 col-lg-offset-4">';
+          
+          {% if warning is defined %}
+            
+            <div class="alert alert-danger">{{ warning }}</div>
+            
+          {% endif %}
+          
+          
+          <form action="{{ www }}fbadmin/" method="POST" class="form-signin">
+        
+            <h2 class="form-signin-heading">Please sign in</h2>
+            
+            <div class="form-group">
+              <label for="lf_email" class="sr-only">Email Address</label>
+              <input type="email" name="lf_email" id="lf_email" class="form-control" autofocus required/>
+            </div>
+      
+            <div class="form-group">
+              <label for="lf_password" class="sr-only">Password</label>
+              <input type="password" name="lf_password" id="lf_password" class="form-control"/>
+            </div>
+            
+            <input type="hidden" name="loginform" value="go" />
+            <input type="submit" value="Sign in" class="btn btn-primary btn-block" />
+            
+          </form>
+          
+        </div>
+      </div>
+    </div>
+    
+
+    <script src="{{ www }}stylesheets/jquery/jquery-3.2.1.min.js"></script>
+    <script src="{{ www }}stylesheets/bootstrap/js/bootstrap.min.js"></script>
+  </body>
+</html>

@@ -1,0 +1,15 @@
+
+        <div class="col-lg-2 col-md-3 col-sm-3 col-xs-4 sidebar">
+          <div class="nav-title">'.modules\fbvar('ADMIN_TITLE').'</div>
+        
+          <ul class="nav nav-sidebar">';
+       
+  {% for item in menu %}
+          
+            <li><a href="{{ item.href }}">{{ item.title }}</a></li>';
+        
+  {% endfor %}
+        
+          </ul>
+        </div>
+        

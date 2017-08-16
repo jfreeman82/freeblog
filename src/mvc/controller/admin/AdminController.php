@@ -69,21 +69,23 @@ class AdminController extends Controller
         $check = $this->model->fp_login();
         switch($check['status']) {
             case '0':
-                $loginArr = $this->model->formArray_login();
-                $this->view->login($loginArr);
+                //$loginArr = $this->model->formArray_login();
+                //$this->view->login($loginArr);
+                $template = $this->twig->load('admin/login.twig');
+                echo $template->render($this->twigarr);
                 break;
             case '1':
                 //echo 'uid: '.$_SESSION['uid'];
                 header("Location: ".ADMIN_URL);
                 break;
-            default:
-                $warning = $check['warning'];
-                $this->view->setWarning($warning);
-                $loginArr = $this->model->formArray_login();
-                $this->view->login($loginArr);
-            
+            default:                
+                $this->twigarr['warning'] = $check['warning'];
+                //$this->view->setWarning($warning);
+                //$loginArr = $this->model->formArray_login();
+                //$this->view->login($loginArr);
+                $template = $this->twig->load('admin/login.twig');
+                echo $template->render($this->twigarr);
         }
-    }
-    
+    }    
 }
 

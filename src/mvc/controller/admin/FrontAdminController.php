@@ -11,8 +11,10 @@ class FrontAdminController extends AdminController
 
     public function invoke()
     {        
-        $this->setView(new FrontAdminView());
-        $this->view->front();
+        //$this->setView(new FrontAdminView());
+        //$this->view->front();
+        $template = $this->twig->load('admin/front.twig');
+        echo $template->render($this->twigarr);
     }
     
     

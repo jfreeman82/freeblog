@@ -3,15 +3,16 @@ namespace freest\blog\mvc\model\admin;
 
 use freest\modules\DB\DBC;
 use freest\blog\mvc\model\Model as Model;
+
+use freest\blog\modules\User as User;
+
 /**
  * Description of Model
  *
  * @author myrmidex
  */
 class AdminModel extends Model {
-
-  public function __construct() {}
-  
+ 
   
   /* FORM PROCESSORS */
   
@@ -28,7 +29,15 @@ class AdminModel extends Model {
             $dbc = new DBC();
             $q = $dbc->query($sql) or die("ERROR Model / fp_login - ".$dbc->error());
             if ($q->num_rows == 0) {
-                return array('warning' => 'Username / Password combination not found.');
+                //echo 'fout.';
+                echo 'this pwd: '.$password;
+                $sql = "SELECT id FROM users WHERE email = '$email';";
+                $q = $dbc->query($sql) or die("ERROR!");
+                $id = $q->fetch_assoc()['id'];
+                $user = new User($id);
+                echo '// db pass: '.$user->password();
+                return array('status' => 'warning', 
+                    'warning' => 'Username / Password combination not found.');
             }
             else {
                 $uid = $q->fetch_assoc()['id'];
@@ -41,49 +50,7 @@ class AdminModel extends Model {
         }
     }
   
-    /*
-     * Form Arrays
-     * 
-     * returns the build-array of the form function
-     */
-    public function formArray_login(): Array
-    {
-        return array(
-            'form-class'    => 'form-signin',
-            'form-action'   => ADMIN_URL,
-            'form-title'    => 'Please sign in',
-            'form-title-class' => 'form-signin-heading',
-            'elements'      => array(
-                array(
-                    'type'          => 'email',
-                    'name'          => 'lf_email',
-                    'id'            => 'lf_email',
-                    'class'         => 'form-control',
-                    'setlabel'      => 1,
-                    'label'         => 'Email Address',
-                    'label-class'   => 'sr-only'
-                ),
-                array(
-                    'type'          => 'password',
-                    'name'          => 'lf_password',
-                    'id'            => 'lf_password',
-                    'class'         => 'form-control',
-                    'setlabel'      => 1,
-                    'label'         => 'Password',
-                    'label-class'   => 'sr-only'
-                ),
-                array(
-                    'type'  => 'hidden',
-                    'name'  => 'loginform',
-                    'value' => 'go'
-                ),
-                array(
-                    'type'  => 'submit',
-                    'class' => 'btn btn-lg btn-primary btn-block',
-                    'value' => 'Sign in'
-                )
-            )
-        );
-    }
+   
+    
     
 }
