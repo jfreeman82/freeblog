@@ -1,0 +1,38 @@
+{{ include('admin/_header.twig') }}
+
+<h2>Articles</h2>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th class="col-lg-1">id</th>
+      <th class="col-lg-1">date</th>
+      <th class="col-lg-6">title</th>
+      <th class="col-lg-2">user</th>
+      <th class="col-lg-2">actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    {% for article in articles %}
+          
+    <tr class="row">
+      <td><a href="{{ www }}fbadmin/article/{{ article.id }}/"> {{ article.id }} </a></td>
+      <td><a href="{{ www }}fbadmin/article/{{ article.id }}/"> {{ article.gendate }} </a></td>
+      <td><a href="{{ www }}fbadmin/article/{{ article.id }}/"> {{ article.title }} </a></td>
+      <td><a href="{{ www }}fbadmin/user/{{ article.uid }}/"> {{ article.user.username }} </a></td>
+      <td>
+        <a href="{{ www }}fbadmin/article/{{ article.id }}/edit">  Edit  </a>&nbsp;
+        <a href="{{ www }}fbadmin/article/{{ article.id }}/delete">Delete</a>
+        
+
+      </td>
+    </tr>
+
+    {% endfor %}  
+  </tbody>
+</table>
+
+
+<a href="{{ www }}fbadmin/article/new" class="btn btn-primary">Add New Article</a>';
+      
+{{ include('admin/_footer.twig') }}

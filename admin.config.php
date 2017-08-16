@@ -11,8 +11,6 @@ require_once 'src/mvc/model/admin/AdminModel.php';
 require_once 'src/mvc/model/admin/ArticleAdminModel.php';
 require_once 'src/mvc/model/admin/UserAdminModel.php';
 
-require_once 'src/mvc/view/admin/AdminView.php';
-require_once 'src/mvc/view/admin/FrontAdminView.php';
 require_once 'src/mvc/view/admin/ArticleAdminView.php';
 require_once 'src/mvc/view/admin/UserAdminView.php';
 
