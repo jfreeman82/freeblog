@@ -1,0 +1,15 @@
+{
+    "name": "jfreeman82/blog",
+    "description": "A Free PHP Blog",
+    "type": "library",
+    "require": {
+        "twig/twig": "2.4.3"
+    },
+    "authors": [
+        {
+            "name": "jfreeman",
+            "email": "jfreeman@skedaddling.com"
+        }
+    ],
+    "minimum-stability": "dev"
+}
