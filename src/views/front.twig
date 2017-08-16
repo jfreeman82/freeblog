@@ -1,0 +1,23 @@
+
+{{ include('_header.twig') }}
+        
+  {% for art in articles %}
+            
+          <article class="blog-post">
+            <h2 class="blog-post-title"> {{ art.title }} </h2>
+            <p class="blog-post-meta"> {{ art.gendate }} ' by <a href="#"> {{ art.user.username }}</a></p>
+            <p class="blog-post-body"> {{ art.article_short }} </p>
+            <a href="article/{{ art.id }}/">Read More...</a>
+          </article>
+         
+  {% endfor %}
+        
+          <nav>
+            <ul class="pager">
+              <li><a href="#">Previous</a></li>
+              <li><a href="#">Next</a></li>
+            </ul>
+          </nav>
+
+        
+{{ include('_footer.twig') }}

@@ -38,6 +38,7 @@ class Model
             $month = substr($monthyear,0,2);
             $year = substr($monthyear,2);
             $out[] = array( 'month' => $month,
+                            'monthname' => date("F",mktime(0,0,0,$month,1,$year)),
                             'year'  => $year
                     );
         }

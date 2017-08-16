@@ -1,0 +1,38 @@
+
+        <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+          <div class="sidebar-module sidebar-module-inset">
+            <h4>About</h4>
+            <p> {{ site_about|raw }} </p>
+          </div>
+          <div class="sidebar-module">
+            <h4>Archives</h4>
+            
+            <ol class="list-unstyled">
+              
+              {% for archive in sidebar_archives %}
+                
+                <li>
+                  <a href="{{ www }}archives/{{ archive.year }}/{{ archive.month }}/">
+                    {{ archive.monthname }} {{ archive.year }}
+                  </a>
+                </li>
+
+            {% endfor %}
+            
+            </ol>
+
+          </div>
+          <div class="sidebar-module">
+            <h4>Elsewhere</h4>
+            <ol class="list-unstyled">
+              <li>
+                <a href="https://github.com/jfreeman82/freestblog" target="_blank" class="black">
+                    <i class="fa fa-github fa-3x"></i>
+                </a>
+              </li>
+            </ol>
+          </div>
+        </div><!-- /.blog-sidebar -->
+   
+
+

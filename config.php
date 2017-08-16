@@ -14,9 +14,8 @@ define("MYSQL_DB","freeblog");
 // ROUTING 
 define("BASE_ROUTE",'blog/public');
 
-define('SITE_TITLE', 'FreestBlog');
-
 // Requires
+require_once 'vendor/autoload.php';
 require_once 'src/modules/DBC.php';
 
 require_once 'src/mvc/controller/Controller.php';
@@ -35,3 +34,8 @@ require_once 'src/modules/User.php';
 require_once 'src/modules/fbvars.php';
 
 require_once '../../router/Router.php';
+
+
+define('SITE_TITLE', \freest\blog\modules\fbvar('SITE_TITLE'));
+define('SITE_SUBTITLE', \freest\blog\modules\fbvar('SITE_SUBTITLE'));
+define('SITE_ABOUT', \freest\blog\modules\fbvar('SITE_ABOUT'));

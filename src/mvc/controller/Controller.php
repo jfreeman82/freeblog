@@ -7,6 +7,10 @@ use freest\router\Router as Router;
 
 use freest\blog\mvc\controller\admin\AdminController as AdminController;
 
+// Twig modules
+use Twig_Environment;
+use Twig_Loader_Filesystem;
+
 /* 
  * Controller.php
  */
@@ -17,8 +21,25 @@ class Controller
     protected $view;
     
     protected $router;
-   
-    public function __construct() {}
+    
+    protected $twig;
+    protected $twigarr;
+    
+    public function __construct() {
+        $this->setTwig();
+    }
+    
+    private function setTwig() {
+        $loader = new Twig_Loader_Filesystem(ROOT_URL.'src/views/');
+        $this->twig = new Twig_Environment($loader, array(
+            'cache' => false
+        ));
+        $this->twigarr = array('site_title' => SITE_TITLE, 
+            'www' => BASE_URL,
+            'site_subtitle' => SITE_SUBTITLE,
+            'site_about' => SITE_ABOUT,
+            'sidebar_archives' => Model::retrieve_archives());    
+    }
 
     protected function setModel(Model $model) 
     {

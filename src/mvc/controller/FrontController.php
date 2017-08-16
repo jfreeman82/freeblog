@@ -16,8 +16,9 @@ class FrontController extends Controller{
         $this->setModel(new ArticleModel());
         $this->setView(new FrontView());
         
-        $arts = $this->model->articles_lastx_obj(5);
-        $this->view->front($arts);            
+        $this->twigarr['articles'] = ArticleModel::articles_lastx_obj(5);
+        $template = $this->twig->load('front.twig');
+        echo $template->render($this->twigarr);
     }
     
 }

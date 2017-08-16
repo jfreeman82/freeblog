@@ -48,6 +48,10 @@ class Article {
   public function uid()     { return $this->uid;            }
   public function user()    { return new User($this->uid);  }
 
+  public function article_short() {
+      return substr($this->article, 0, 200).'...';
+  }
+  
   public function dataArray() {
     return array(
         'id'      => $this->id,
