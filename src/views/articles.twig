@@ -1,0 +1,15 @@
+{{ include('_header.twig') }}
+
+  {% for article in articles %}
+
+          <article class="blog-post">
+            <h2 class="blog-post-title"> {{ article.title }} </h2>
+            <p class="blog-post-meta"> {{ article.gendate }} 
+              by <a href="{{ www }}users/{{ article.uid }}/"> {{ article.user.username }}</a></p>
+            <p class="blog-post-body"> {{ article.article_short }} </p>
+            <a href="{{ www }}article/{{ article.id }}/">Read More...</a>
+          </article>
+
+  {% endfor %}
+  
+{{ include('_footer.twig') }}

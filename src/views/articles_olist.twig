@@ -1,0 +1,15 @@
+{{ include('_header.twig') }}
+
+    <h1 class="page-header">All Posts</h1>
+    <ol class="list-unstyled">
+    
+    {% for article in articles %}
+                
+      <li><a href="{{ www }}article/{{ article.id }}/"> {{ article.title }} </a></li>
+    
+    {% endfor %}
+           
+    </ol>
+
+  
+{{ include('_footer.twig') }}

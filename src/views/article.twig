@@ -1,0 +1,9 @@
+{{ include('_header.twig') }}
+
+      <article class="blog-post">
+        <h2 class="blog-post-title"> {{ article.title }} </h2>
+        <p class="blog-post-meta"> {{ article.gendate }} by <a href="#">{{ article.username }} </a></p>
+        <p class="blog-post-body"> {{ article.article }} </p>
+      </article>
+          
+{{ include('_footer.twig') }}
